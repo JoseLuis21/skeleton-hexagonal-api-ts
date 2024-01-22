@@ -1,0 +1,18 @@
+version: "3"
+services:
+  skeleton-hexagonal-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: skeleton-hexagonal-api
+    container_name: skeleton-hexagonal-api
+    restart: always
+    ports:
+      - "3081:80"
+    networks:
+      - skeleton-hexagonal-network
+    environment:
+      NODE_ENV: production
+networks:
+  skeleton-hexagonal-network:
+    driver: bridge

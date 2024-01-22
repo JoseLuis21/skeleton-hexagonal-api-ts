@@ -63,3 +63,25 @@ Add command to `package.json` in section scripts
 "start": "npm run build && node dist/app.js",
 "build": "rimraf ./dist && tsc"
 ```
+
+## DOCKER
+
+Create image for execute api with the file `Dockerfile`
+
+```
+Docker build -t example-image .
+```
+
+Execute image Two possibilities
+
+1. Directly run the container
+
+```
+  docker run example-image
+```
+
+2. Run with Docker Compose `docker-compose.yml`
+
+```
+docker compose up --build
+```
