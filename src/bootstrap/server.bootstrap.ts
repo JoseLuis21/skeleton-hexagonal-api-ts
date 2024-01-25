@@ -1,4 +1,5 @@
 import Fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import cors from '@fastify/cors';
 import { IBootstrap } from './bootstap.interface';
 
 export class ServerBootstrap implements IBootstrap {
@@ -8,8 +9,9 @@ export class ServerBootstrap implements IBootstrap {
     this.fastify = Fastify({
       logger: true,
     });
-    this.addtHealthCheck();
     this.addMiddlewares();
+    this.addCors();
+    this.addHealthCheck();
     this.addRoutes();
   }
 
@@ -26,13 +28,17 @@ export class ServerBootstrap implements IBootstrap {
 
   private addMiddlewares() {}
 
-  private addtHealthCheck(): void {
+  private addHealthCheck(): void {
     this.fastify.get('/healthcheck', (_: FastifyRequest, reply: FastifyReply) => {
       return reply.send('ok').status(200);
     });
   }
 
   private addRoutes(): void {
-    this.fastify.register(import('../modules/http/routes/user.routes'), { prefix: 'test' });
+    this.fastify.register(import('../modules/users/infrastructure/http/routes/user.routes'), { prefix: 'v1/users' });
+  }
+
+  private addCors(): void {
+    this.fastify.register(cors, {});
   }
 }

@@ -4,7 +4,7 @@ import { UserRepository } from '../domain/user.repository';
 export class DeleteUser {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async execute(user: User) {
-    return this.userRepository.delete(user);
+  async execute(id: number) {
+    return this.userRepository.delete(id);
   }
 }
