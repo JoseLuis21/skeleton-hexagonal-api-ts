@@ -2,12 +2,12 @@
   "name": "skeleton-hexagonal-api-ts",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/app.js",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --fix ./src/*",
-    "dev": "npx ts-node-dev --respawn --transpile-only --debug ./src/app.ts",
-    "start": "npm run build && node dist/app.js",
+    "dev": "npx ts-node-dev --respawn --transpile-only --debug ./src/index.ts",
+    "start": "npm run build && node dist/index.js",
     "build": "rimraf ./dist && tsc"
   },
   "keywords": [],
@@ -27,5 +27,8 @@
     "rimraf": "^5.0.5",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "fastify": "^4.25.2"
   }
 }

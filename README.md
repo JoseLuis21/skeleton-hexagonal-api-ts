@@ -28,10 +28,8 @@ module.exports = {
       version: "999.999.999",
     },
   },
-  extends: [
-    "airbnb",
-    "prettier",
-  ],
+  extends: ["airbnb", "prettier"],
+  "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
 };
 ```
 
