@@ -83,3 +83,5 @@ Execute image Two possibilities
 ```
 docker compose up --build
 ```
+
+// Todo: prisma, zod, fastify, fastify cors, debug vscode

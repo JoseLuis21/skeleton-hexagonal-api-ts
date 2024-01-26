@@ -6,5 +6,5 @@ export enum TenantType {
 export interface BaseInfoTenant {
   tenantName: string;
   tenantNode: number;
-  tenantType: TenantType;
+  tenantType: string;
 }

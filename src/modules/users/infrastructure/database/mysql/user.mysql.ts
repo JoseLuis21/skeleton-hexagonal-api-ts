@@ -1,24 +1,24 @@
 import { User } from '../../../domain/user.model';
 import { UserRepository } from '../../../domain/user.repository';
 import { PrismaClientAdapter } from '../../../../../internal/database/prisma/PrismaClientAdapter';
-import { BaseInfoTenant } from '../../../../shared/domain/base-info-tenant';
+import { BaseInfoTenant } from '../../../../shared/domain/tenant-types';
 
 export class UserMysql implements UserRepository {
   constructor(private readonly prismaClientAdapter: PrismaClientAdapter) {}
 
-  create(user: User): Promise<User> {
+  create(baseInfoTenant: BaseInfoTenant, user: User): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  update(user: User): Promise<User> {
+  update(baseInfoTenant: BaseInfoTenant, user: User): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  delete(id: number): Promise<boolean> {
+  delete(baseInfoTenant: BaseInfoTenant, id: number): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
-  findById(id: number): Promise<User> {
+  findById(baseInfoTenant: BaseInfoTenant, id: number): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  findByEmail(email: string): Promise<User> {
+  findByEmail(baseInfoTenant: BaseInfoTenant, email: string): Promise<User> {
     throw new Error('Method not implemented.');
   }
   async findAll(baseInfoTenant: BaseInfoTenant): Promise<User[]> {

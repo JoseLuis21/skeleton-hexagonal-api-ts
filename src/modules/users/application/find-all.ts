@@ -1,4 +1,4 @@
-import { BaseInfoTenant } from '../../shared/domain/base-info-tenant';
+import { BaseInfoTenant } from '../../shared/domain/tenant-types';
 import { UserRepository } from '../domain/user.repository';
 
 export class FindAllUser {
