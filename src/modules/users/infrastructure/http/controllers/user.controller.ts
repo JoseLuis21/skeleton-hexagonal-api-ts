@@ -7,6 +7,7 @@ import { FindByIdUser } from '../../../application/find-by-id';
 import { FindByEmailUser } from '../../../application/find-by-email';
 import { FindAllUser } from '../../../application/find-all';
 import { User } from '../../../domain/user.model';
+import { BaseInfoTenant, TenantType } from '../../../../shared/domain/base-info-tenant';
 
 export class UserController {
   constructor(
@@ -18,8 +19,13 @@ export class UserController {
     private readonly findAllUser: FindAllUser,
   ) {}
 
-  async getUsers(_: FastifyRequest, reply: FastifyReply) {
-    const users = await this.findAllUser.execute();
+  async getUsers(req: FastifyRequest, reply: FastifyReply) {
+    const baseInfoTenant: BaseInfoTenant = {
+      tenantName: 'prisma',
+      tenantNode: 1,
+      tenantType: TenantType.READ,
+    };
+    const users = await this.findAllUser.execute(baseInfoTenant);
     return reply.send(users).status(200);
   }
 

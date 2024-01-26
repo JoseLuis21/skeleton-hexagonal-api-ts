@@ -1,7 +1,7 @@
-import { ServerBootstrap } from './bootstrap/server.bootstrap';
+import { Server } from './internal/server/server';
 
 (async () => {
-  const server = new ServerBootstrap();
+  const server = new Server();
   try {
     await server.initialize();
   } catch (error) {

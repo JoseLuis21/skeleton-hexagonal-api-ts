@@ -1,8 +1,7 @@
 import Fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import cors from '@fastify/cors';
-import { IBootstrap } from './bootstap.interface';
 
-export class ServerBootstrap implements IBootstrap {
+export class Server {
   private readonly fastify: FastifyInstance;
 
   constructor() {
@@ -35,7 +34,7 @@ export class ServerBootstrap implements IBootstrap {
   }
 
   private addRoutes(): void {
-    this.fastify.register(import('../modules/users/infrastructure/http/routes/user.routes'), { prefix: 'v1/users' });
+    this.fastify.register(import('../../modules/users/infrastructure/http/routes/user.routes'), { prefix: 'v1/users' });
   }
 
   private addCors(): void {
