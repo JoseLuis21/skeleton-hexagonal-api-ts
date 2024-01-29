@@ -182,4 +182,10 @@ Modify the `launch.json` and `task.json` file to your liking to run the vscode d
   .vscode/task.json
 ```
 
+Plugins Recommended, read in:
+
+```
+  .vscode/extensions.json
+```
+
 For more information go to the [Documentation](https://code.visualstudio.com/docs/nodejs/nodejs-debugging)

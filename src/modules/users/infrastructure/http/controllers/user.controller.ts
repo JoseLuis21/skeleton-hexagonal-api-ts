@@ -21,7 +21,7 @@ export class UserController {
 
   async getUsers(_: FastifyRequest, reply: FastifyReply) {
     const tenantConfig = new Tenant('prisma', 1, 'reader');
-    const users = await this.findAllUser.execute(tenantConfig.getBaseInfoTentant());
+    const users = await this.findAllUser.execute(tenantConfig.getBaseInfoTentant(), 4, 3);
     return reply.send(users).status(200);
   }
 

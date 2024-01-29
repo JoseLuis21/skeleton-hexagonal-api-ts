@@ -1,9 +1,9 @@
-import { BaseInfoTenant } from './tenant-types';
+import { TenantConfig } from './tenant-types';
 
 export interface Baserepository<T, Q> {
-  create(baseInfoTenant: BaseInfoTenant, model: T): Promise<T>;
-  update(baseInfoTenant: BaseInfoTenant, model: T): Promise<T>;
-  delete(baseInfoTenant: BaseInfoTenant, id: Q): Promise<boolean>;
-  findById(baseInfoTenant: BaseInfoTenant, id: Q): Promise<T>;
-  findAll(baseInfoTenant: BaseInfoTenant): Promise<T[]>;
+  create(tenantConfig: TenantConfig, model: T): Promise<T>;
+  update(tenantConfig: TenantConfig, model: T): Promise<T>;
+  delete(tenantConfig: TenantConfig, id: Q): Promise<boolean>;
+  findById(tenantConfig: TenantConfig, id: Q): Promise<T>;
+  findAll(tenantConfig: TenantConfig, cursor: number, pageLimit: number): Promise<T[]>;
 }

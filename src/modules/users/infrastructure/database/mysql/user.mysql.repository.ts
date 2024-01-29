@@ -21,20 +21,23 @@ export class UserMysqlRepository implements UserRepository {
   findByEmail(tenantConfig: TenantConfig, email: string): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  async findAll(tenantConfig: TenantConfig): Promise<User[]> {
-    const prismaclient = await this.prismaClientAdapter.createInstance(
-      tenantConfig.tenantName,
-      tenantConfig.tenantNode,
-      tenantConfig.tenantType,
-    );
-    const user: User[] = await prismaclient.user.findMany({
+  async findAll(tenantConfig: TenantConfig, cursor: number, pageLimit: number): Promise<User[]> {
+    const prismaclient = await this.prismaClientAdapter.createInstance(tenantConfig);
+
+    const users = await prismaclient.user.findMany({
       select: {
+        id: true,
         name: true,
         email: true,
         password: true,
       },
+      take: pageLimit,
+      orderBy: { id: 'asc' },
+      cursor: { id: cursor },
     });
+
     await prismaclient.$disconnect();
-    return Promise.resolve(user);
+
+    return users;
   }
 }
