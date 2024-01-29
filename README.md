@@ -21,70 +21,74 @@
 
 Init project
 
-```
+```bash
   npm init -y
 ```
 
 Install dependencies
 
-```
+```bash
   npm i -D typescript @types/node ts-node-dev eslint prettier eslint-config-airbnb
   eslint-config-prettier eslint-plugin-prettier rimraf
 ```
 
 Execute this command for init typescript
 
-```
+```bash
   npx tsc --init --outDir dist/ --rootDir src
 ```
 
 Create file `.eslintrc.js` in root folder
 
-```
-  module.exports = {
-    settings: {
-      react: {
-        version: "999.999.999",
-      },
+```js
+module.exports = {
+  settings: {
+    react: {
+      version: '999.999.999',
     },
-    extends: ["airbnb", "prettier"],
-    "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
-  };
+  },
+  extends: ['airbnb', 'prettier'],
+  'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+};
 ```
 
 For more information go to the [Documentation](https://eslint.org/docs/latest/use/configure/configuration-files)
 
 Create file `.prettierrc.js` in root folder
 
-```
-  module.exports = {
-    semi: true,
-    trailingComma: "all",
-    singleQuote: true,
-    printWidth: 120,
-    tabWidth: 2,
-  };
+```js
+module.exports = {
+  semi: true,
+  trailingComma: 'all',
+  singleQuote: true,
+  printWidth: 120,
+  tabWidth: 2,
+};
 ```
 
 For more information go to the [Documentation](https://prettier.io/docs/en/options)
 
 Add in VSCODE `settings.json` and install prettier and eslint plugins in to editor
 
-```
+```json
+{
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "eslint.validate": ["javascript", "typescript"]
+}
 ```
 
 For more information go to the [Documentation](https://code.visualstudio.com/docs/getstarted/settings)
 
 Add command to `package.json` in section scripts
 
-```
+```json
+{
   "lint": "eslint --fix ./src/*",
   "dev": "npx ts-node-dev --respawn --transpile-only --debug ./src/app.ts",
   "start": "npm run build && node dist/app.js",
   "build": "rimraf ./dist && tsc"
+}
 ```
 
 For more information go to the [Documentation](https://docs.npmjs.com/cli/v10/configuring-npm/package-json)
@@ -93,7 +97,7 @@ For more information go to the [Documentation](https://docs.npmjs.com/cli/v10/co
 
 Create image for execute api with the file `Dockerfile`
 
-```
+```bash
   docker build -t example-image .
 ```
 
@@ -101,13 +105,13 @@ Execute image Two possibilities
 
 1. Directly run the container
 
-```
+```bash
   docker run example-image
 ```
 
 2. Run with docker compose `docker-compose.yml`
 
-```
+```bash
   docker compose up --build
 ```
 
@@ -119,7 +123,7 @@ For route management we use `Fastify`
 
 1. Install fastify fastify-cors
 
-```
+```bash
   npm install fastify @fastify/cors
 ```
 
@@ -131,7 +135,7 @@ For validations we use `zod`
 
 1. Install zod
 
-```
+```bash
   npm install zod
 ```
 
@@ -143,31 +147,31 @@ For database management we use `Prisma`
 
 1. Install prisma
 
-```
+```bash
   npm install prisma --save-dev
 ```
 
 2. Setup Prisma
 
-```
+```sh
   npx prisma init --datasource-provider mysql
 ```
 
 2. Run the migrations
 
-```
+```bash
   npx prisma migrate dev --name init
 ```
 
 3. To generate the schema automatically if you already have a database, execute:
 
-```
+```bash
   npx prisma db pull
 ```
 
 4. Generate primas client
 
-```
+```bash
   npx prisma generate
 ```
 
