@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { UserController } from '../controllers/user.controller';
 import { UserRepository } from '../../../domain/user.repository';
-import { UserMysql } from '../../database/mysql/user.mysql';
+import { UserMysqlRepository } from '../../database/mysql/user.mysql.repository';
 import { CreateUser } from '../../../application/create';
 import { UpdateUser } from '../../../application/update';
 import { DeleteUser } from '../../../application/delete';
@@ -12,13 +12,13 @@ import { PrismaClientAdapter } from '../../../../../internal/database/prisma/Pri
 
 export default async function UserRoutes(fastify: FastifyInstance) {
   const prismaClientAdapter: PrismaClientAdapter = new PrismaClientAdapter();
-  const userMysql: UserRepository = new UserMysql(prismaClientAdapter);
-  const createUser = new CreateUser(userMysql);
-  const updateUser = new UpdateUser(userMysql);
-  const deleteUser = new DeleteUser(userMysql);
-  const findByIdUser = new FindByIdUser(userMysql);
-  const findByEmailUser = new FindByEmailUser(userMysql);
-  const findAllUser = new FindAllUser(userMysql);
+  const userMysqlRepository: UserRepository = new UserMysqlRepository(prismaClientAdapter);
+  const createUser = new CreateUser(userMysqlRepository);
+  const updateUser = new UpdateUser(userMysqlRepository);
+  const deleteUser = new DeleteUser(userMysqlRepository);
+  const findByIdUser = new FindByIdUser(userMysqlRepository);
+  const findByEmailUser = new FindByEmailUser(userMysqlRepository);
+  const findAllUser = new FindAllUser(userMysqlRepository);
   const userController = new UserController(
     createUser,
     updateUser,

@@ -7,7 +7,6 @@ import { FindByIdUser } from '../../../application/find-by-id';
 import { FindByEmailUser } from '../../../application/find-by-email';
 import { FindAllUser } from '../../../application/find-all';
 import { User } from '../../../domain/user.model';
-import { BaseInfoTenant, TenantType } from '../../../../shared/domain/tenant-types';
 import { Tenant } from '../../../../shared/domain/tenant.model';
 
 export class UserController {
@@ -21,29 +20,29 @@ export class UserController {
   ) {}
 
   async getUsers(_: FastifyRequest, reply: FastifyReply) {
-    const baseInfoTenant = new Tenant('prisma', 1, 'r');
-    const users = await this.findAllUser.execute(baseInfoTenant.getBaseInfoTentant());
+    const tenantConfig = new Tenant('prisma', 1, 'reader');
+    const users = await this.findAllUser.execute(tenantConfig.getBaseInfoTentant());
     return reply.send(users).status(200);
   }
 
   async addUser(_: FastifyRequest, reply: FastifyReply) {
-    const baseInfoTenant = new Tenant('prisma', 1, 'r');
+    const tenantConfig = new Tenant('prisma', 1, 'reader');
     const user = new User('jose', 'jose@jose.cl', '123456');
-    return this.createUser.execute(baseInfoTenant.getBaseInfoTentant(), user);
+    return this.createUser.execute(tenantConfig.getBaseInfoTentant(), user);
   }
   async modifyUser(_: FastifyRequest, reply: FastifyReply) {
-    const baseInfoTenant = new Tenant('prisma', 1, 'r');
+    const tenantConfig = new Tenant('prisma', 1, 'reader');
     const user = new User('jose', 'jose@jose.cl', '123456');
-    return this.updateUser.execute(baseInfoTenant.getBaseInfoTentant(), user);
+    return this.updateUser.execute(tenantConfig.getBaseInfoTentant(), user);
   }
   async removeUser(_: FastifyRequest, reply: FastifyReply) {
-    const baseInfoTenant = new Tenant('prisma', 1, 'r');
-    return this.deleteUser.execute(baseInfoTenant.getBaseInfoTentant(), 1);
+    const tenantConfig = new Tenant('prisma', 1, 'reader');
+    return this.deleteUser.execute(tenantConfig.getBaseInfoTentant(), 1);
   }
   async getUserById(_: FastifyRequest, reply: FastifyReply) {
     try {
-      const baseInfoTenant = new Tenant('prisma', 1, 'r');
-      const user = await this.findByIdUser.execute(baseInfoTenant.getBaseInfoTentant(), 1);
+      const tenantConfig = new Tenant('prisma', 1, 'reader');
+      const user = await this.findByIdUser.execute(tenantConfig.getBaseInfoTentant(), 1);
       return reply.send(user).status(200);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -58,7 +57,7 @@ export class UserController {
     }
   }
   async getUserByEmail(_: FastifyRequest, reply: FastifyReply) {
-    const baseInfoTenant = new Tenant('prisma', 1, 'r');
-    return this.findByEmailUser.execute(baseInfoTenant.getBaseInfoTentant(), 'test@test.com');
+    const tenantConfig = new Tenant('prisma', 1, 'reader');
+    return this.findByEmailUser.execute(tenantConfig.getBaseInfoTentant(), 'test@test.com');
   }
 }

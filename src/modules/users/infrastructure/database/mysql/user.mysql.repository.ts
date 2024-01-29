@@ -1,31 +1,31 @@
 import { User } from '../../../domain/user.model';
 import { UserRepository } from '../../../domain/user.repository';
 import { PrismaClientAdapter } from '../../../../../internal/database/prisma/PrismaClientAdapter';
-import { BaseInfoTenant } from '../../../../shared/domain/tenant-types';
+import { TenantConfig } from '../../../../shared/domain/tenant-types';
 
-export class UserMysql implements UserRepository {
+export class UserMysqlRepository implements UserRepository {
   constructor(private readonly prismaClientAdapter: PrismaClientAdapter) {}
 
-  create(baseInfoTenant: BaseInfoTenant, user: User): Promise<User> {
+  create(tenantConfig: TenantConfig, user: User): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  update(baseInfoTenant: BaseInfoTenant, user: User): Promise<User> {
+  update(tenantConfig: TenantConfig, user: User): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  delete(baseInfoTenant: BaseInfoTenant, id: number): Promise<boolean> {
+  delete(tenantConfig: TenantConfig, id: number): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
-  findById(baseInfoTenant: BaseInfoTenant, id: number): Promise<User> {
+  findById(tenantConfig: TenantConfig, id: number): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  findByEmail(baseInfoTenant: BaseInfoTenant, email: string): Promise<User> {
+  findByEmail(tenantConfig: TenantConfig, email: string): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  async findAll(baseInfoTenant: BaseInfoTenant): Promise<User[]> {
+  async findAll(tenantConfig: TenantConfig): Promise<User[]> {
     const prismaclient = await this.prismaClientAdapter.createInstance(
-      baseInfoTenant.tenantName,
-      baseInfoTenant.tenantNode,
-      baseInfoTenant.tenantType,
+      tenantConfig.tenantName,
+      tenantConfig.tenantNode,
+      tenantConfig.tenantType,
     );
     const user: User[] = await prismaclient.user.findMany({
       select: {

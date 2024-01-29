@@ -1,10 +1,7 @@
-export enum TenantType {
-  WRITE = 'w',
-  READ = 'r',
-}
+export type TenantType = 'writter' | 'reader';
 
-export interface BaseInfoTenant {
+export interface TenantConfig {
   tenantName: string;
   tenantNode: number;
-  tenantType: string;
+  tenantType: TenantType;
 }

@@ -4,11 +4,11 @@ export class Tenant {
   constructor(
     private readonly databaseName: string,
     private readonly databaseNode: number,
-    private readonly databaseType: string,
+    private readonly databaseType: TenantType,
   ) {
     this.databaseName = databaseName;
     this.databaseNode = databaseNode;
-    this.databaseType = databaseType === 'r' ? TenantType.READ : TenantType.WRITE;
+    this.databaseType = databaseType;
   }
 
   public getBaseInfoTentant(): BaseInfoTenant {
