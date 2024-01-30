@@ -28,8 +28,7 @@ Init project
 Install dependencies
 
 ```bash
-  npm i -D typescript @types/node ts-node-dev eslint prettier eslint-config-airbnb
-  eslint-config-prettier eslint-plugin-prettier rimraf
+  npm i -D typescript @types/node ts-node-dev eslint rimraf prettier eslint-plugin-prettier eslint-config-prettier
 ```
 
 Execute this command for init typescript
@@ -38,32 +37,41 @@ Execute this command for init typescript
   npx tsc --init --outDir dist/ --rootDir src
 ```
 
-Create file `.eslintrc.js` in root folder
+Create file `.eslintrc.json` in root folder
 
-```js
-module.exports = {
-  settings: {
-    react: {
-      version: '999.999.999',
-    },
+1. Generate file config for eslint
+
+```bash
+  npx eslint --init
+```
+
+```json
+{
+  "env": {
+    "es2021": true,
+    "node": true
   },
-  extends: ['airbnb', 'prettier'],
-  'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-};
+  "extends": ["standard-with-typescript", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {}
+}
 ```
 
 For more information go to the [Documentation](https://eslint.org/docs/latest/use/configure/configuration-files)
 
-Create file `.prettierrc.js` in root folder
+Create file `.prettierrc.json` in root folder
 
-```js
-module.exports = {
-  semi: true,
-  trailingComma: 'all',
-  singleQuote: true,
-  printWidth: 120,
-  tabWidth: 2,
-};
+```json
+{
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "printWidth": 120,
+  "semi": true,
+  "singleQuote": true
+}
 ```
 
 For more information go to the [Documentation](https://prettier.io/docs/en/options)

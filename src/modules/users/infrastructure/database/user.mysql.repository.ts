@@ -1,26 +1,31 @@
-import { User } from '../../../domain/user.model';
-import { UserRepository } from '../../../domain/user.repository';
-import { PrismaClientAdapter } from '../../../../../internal/database/prisma/PrismaClientAdapter';
-import { TenantConfig } from '../../../../shared/domain/tenant-types';
+import { type User } from '../../domain/user.model';
+import { type UserRepository } from '../../domain/user.repository';
+import { type PrismaClientAdapter } from '../../../../internal/database/prisma/PrismaClientAdapter';
+import { type TenantConfig } from '../../../shared/domain/tenant-types';
 
 export class UserMysqlRepository implements UserRepository {
   constructor(private readonly prismaClientAdapter: PrismaClientAdapter) {}
 
-  create(tenantConfig: TenantConfig, user: User): Promise<User> {
+  async create(tenantConfig: TenantConfig, user: User): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  update(tenantConfig: TenantConfig, user: User): Promise<User> {
+
+  async update(tenantConfig: TenantConfig, user: User): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  delete(tenantConfig: TenantConfig, id: number): Promise<boolean> {
+
+  async delete(tenantConfig: TenantConfig, id: number): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
-  findById(tenantConfig: TenantConfig, id: number): Promise<User> {
+
+  async findById(tenantConfig: TenantConfig, id: number): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  findByEmail(tenantConfig: TenantConfig, email: string): Promise<User> {
+
+  async findByEmail(tenantConfig: TenantConfig, email: string): Promise<User> {
     throw new Error('Method not implemented.');
   }
+
   async findAll(tenantConfig: TenantConfig, cursor: number, pageLimit: number): Promise<User[]> {
     const prismaclient = await this.prismaClientAdapter.createInstance(tenantConfig);
 

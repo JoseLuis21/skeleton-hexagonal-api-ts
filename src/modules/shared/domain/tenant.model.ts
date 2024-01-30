@@ -1,4 +1,4 @@
-import { BaseInfoTenant, TenantType } from './tenant-types';
+import { type TenantConfig, type TenantType } from './tenant-types';
 
 export class Tenant {
   constructor(
@@ -11,7 +11,7 @@ export class Tenant {
     this.databaseType = databaseType;
   }
 
-  public getBaseInfoTentant(): BaseInfoTenant {
+  public getBaseInfoTentant(): TenantConfig {
     return {
       tenantName: this.databaseName,
       tenantNode: this.databaseNode,

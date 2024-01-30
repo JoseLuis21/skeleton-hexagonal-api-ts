@@ -1,11 +1,11 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { type FastifyReply, type FastifyRequest } from 'fastify';
 import { z } from 'zod';
-import { CreateUser } from '../../../application/create';
-import { UpdateUser } from '../../../application/update';
-import { DeleteUser } from '../../../application/delete';
-import { FindByIdUser } from '../../../application/find-by-id';
-import { FindByEmailUser } from '../../../application/find-by-email';
-import { FindAllUser } from '../../../application/find-all';
+import { type CreateUser } from '../../../application/create';
+import { type UpdateUser } from '../../../application/update';
+import { type DeleteUser } from '../../../application/delete';
+import { type FindByIdUser } from '../../../application/find-by-id';
+import { type FindByEmailUser } from '../../../application/find-by-email';
+import { type FindAllUser } from '../../../application/find-all';
 import { User } from '../../../domain/user.model';
 import { Tenant } from '../../../../shared/domain/tenant.model';
 
@@ -19,45 +19,48 @@ export class UserController {
     private readonly findAllUser: FindAllUser,
   ) {}
 
-  async getUsers(_: FastifyRequest, reply: FastifyReply) {
+  async getUsers(_: FastifyRequest, reply: FastifyReply): Promise<User> {
     const tenantConfig = new Tenant('prisma', 1, 'reader');
     const users = await this.findAllUser.execute(tenantConfig.getBaseInfoTentant(), 4, 3);
-    return reply.send(users).status(200);
+    return await reply.send(users).status(200);
   }
 
-  async addUser(_: FastifyRequest, reply: FastifyReply) {
+  async addUser(_: FastifyRequest, reply: FastifyReply): Promise<User> {
     const tenantConfig = new Tenant('prisma', 1, 'reader');
     const user = new User('jose', 'jose@jose.cl', '123456');
-    return this.createUser.execute(tenantConfig.getBaseInfoTentant(), user);
+    return await this.createUser.execute(tenantConfig.getBaseInfoTentant(), user);
   }
-  async modifyUser(_: FastifyRequest, reply: FastifyReply) {
+
+  async modifyUser(_: FastifyRequest, reply: FastifyReply): Promise<User> {
     const tenantConfig = new Tenant('prisma', 1, 'reader');
     const user = new User('jose', 'jose@jose.cl', '123456');
-    return this.updateUser.execute(tenantConfig.getBaseInfoTentant(), user);
+    return await this.updateUser.execute(tenantConfig.getBaseInfoTentant(), user);
   }
-  async removeUser(_: FastifyRequest, reply: FastifyReply) {
+
+  async removeUser(_: FastifyRequest, reply: FastifyReply): Promise<boolean> {
     const tenantConfig = new Tenant('prisma', 1, 'reader');
-    return this.deleteUser.execute(tenantConfig.getBaseInfoTentant(), 1);
+    return await this.deleteUser.execute(tenantConfig.getBaseInfoTentant(), 1);
   }
-  async getUserById(_: FastifyRequest, reply: FastifyReply) {
+
+  async getUserById(_: FastifyRequest, reply: FastifyReply): Promise<User> {
     try {
       const tenantConfig = new Tenant('prisma', 1, 'reader');
       const user = await this.findByIdUser.execute(tenantConfig.getBaseInfoTentant(), 1);
-      return reply.send(user).status(200);
+      return await reply.send(user).status(200);
     } catch (error) {
       if (error instanceof z.ZodError) {
         const validationErrors = error.errors.map((err) => ({
           field: err.path.join('.'),
           message: err.message,
         }));
-        return reply.status(400).send({ errors: validationErrors });
-      } else {
-        return reply.status(500).send({ error: 'Something went wrong' });
+        return await reply.status(400).send({ errors: validationErrors });
       }
+      return await reply.status(500).send({ error: 'Something went wrong' });
     }
   }
-  async getUserByEmail(_: FastifyRequest, reply: FastifyReply) {
+
+  async getUserByEmail(_: FastifyRequest, reply: FastifyReply): Promise<User> {
     const tenantConfig = new Tenant('prisma', 1, 'reader');
-    return this.findByEmailUser.execute(tenantConfig.getBaseInfoTentant(), 'test@test.com');
+    return await this.findByEmailUser.execute(tenantConfig.getBaseInfoTentant(), 'test@test.com');
   }
 }

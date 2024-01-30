@@ -1,4 +1,4 @@
-import Fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import Fastify, { type FastifyInstance, type FastifyReply, type FastifyRequest } from 'fastify';
 import cors from '@fastify/cors';
 
 export class Server {
@@ -8,36 +8,37 @@ export class Server {
     this.fastify = Fastify({
       logger: true,
     });
-    this.addMiddlewares();
-    this.addCors();
+  }
+
+  async initialize(): Promise<boolean | Error> {
+    await this.addCors();
     this.addHealthCheck();
-    this.addRoutes();
-  }
+    await this.addRoutes();
 
-  async initialize(): Promise<Boolean | Error> {
-    return new Promise(async (resolve, reject) => {
-      this.fastify.listen({ port: 8084 }, (err, _) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(true);
-      });
-    });
+    try {
+      await this.fastify.listen({ port: 8084 });
+      return true;
+    } catch (error) {
+      if (error instanceof Error) {
+        return error;
+      } else {
+        console.error(error);
+        return new Error('Internal Error');
+      }
+    }
   }
-
-  private addMiddlewares() {}
 
   private addHealthCheck(): void {
-    this.fastify.get('/healthcheck', (_: FastifyRequest, reply: FastifyReply) => {
-      return reply.send('ok').status(200);
+    this.fastify.get('/healthcheck', (_: FastifyRequest, reply: FastifyReply) => reply.send('ok').status(200));
+  }
+
+  private async addRoutes(): Promise<void> {
+    await this.fastify.register(import('../../modules/users/infrastructure/http/routes/user.routes'), {
+      prefix: 'v1/users',
     });
   }
 
-  private addRoutes(): void {
-    this.fastify.register(import('../../modules/users/infrastructure/http/routes/user.routes'), { prefix: 'v1/users' });
-  }
-
-  private addCors(): void {
-    this.fastify.register(cors, {});
+  private async addCors(): Promise<void> {
+    await this.fastify.register(cors, {});
   }
 }
