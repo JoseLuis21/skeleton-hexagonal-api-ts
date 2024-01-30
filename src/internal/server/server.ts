@@ -1,20 +1,24 @@
-import Fastify, { type FastifyInstance, type FastifyReply, type FastifyRequest } from 'fastify';
+import Fastify, { type FastifyReply, type FastifyRequest } from 'fastify';
 import cors from '@fastify/cors';
+import { type FastifyInstanceCustom } from './fastify';
 
 export class Server {
-  private readonly fastify: FastifyInstance;
+  private readonly fastify: FastifyInstanceCustom;
   private readonly port: number;
+  private readonly secretJwt: string;
 
-  constructor(port: number) {
+  constructor(port: number, secretJwt: string) {
     this.fastify = Fastify({
       logger: true,
     });
     this.port = port;
+    this.secretJwt = secretJwt;
   }
 
   async initialize(): Promise<boolean | Error> {
     await this.addCors();
     this.addHealthCheck();
+    await this.addPlugins();
     await this.addRoutes();
 
     try {
@@ -42,5 +46,13 @@ export class Server {
 
   private async addCors(): Promise<void> {
     await this.fastify.register(cors, {});
+  }
+
+  private async addPlugins(): Promise<void> {
+    await this.fastify.register(import('@fastify/jwt'), {
+      secret: this.secretJwt,
+    });
+
+    await this.fastify.register(import('../../../src/modules/shared/infrastructure/http/auth.plugin'), {});
   }
 }

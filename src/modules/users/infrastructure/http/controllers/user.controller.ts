@@ -19,8 +19,9 @@ export class UserController {
     private readonly findAllUser: FindAllUser,
   ) {}
 
-  async getUsers(_: FastifyRequest, reply: FastifyReply): Promise<User> {
+  async getUsers(request: FastifyRequest, reply: FastifyReply): Promise<User> {
     const tenantConfig = new Tenant('prisma', 1, 'reader');
+    console.log(request.user);
     const users = await this.findAllUser.execute(tenantConfig.getBaseInfoTentant(), 4, 3);
     return await reply.send(users).status(200);
   }
@@ -28,6 +29,11 @@ export class UserController {
   async addUser(_: FastifyRequest, reply: FastifyReply): Promise<User> {
     const tenantConfig = new Tenant('prisma', 1, 'reader');
     const user = new User('jose', 'jose@jose.cl', '123456');
+
+    const token = await reply.jwtSign({ test: '1' });
+
+    console.log(token);
+
     return await this.createUser.execute(tenantConfig.getBaseInfoTentant(), user);
   }
 

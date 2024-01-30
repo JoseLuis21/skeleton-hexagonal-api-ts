@@ -1,4 +1,3 @@
-import { type FastifyInstance } from 'fastify';
 import { UserController } from '../controllers/user.controller';
 import { type UserRepository } from '../../../domain/user.repository';
 import { UserMysqlRepository } from '../../database/user.mysql.repository';
@@ -9,8 +8,9 @@ import { FindByIdUser } from '../../../application/find-by-id';
 import { FindByEmailUser } from '../../../application/find-by-email';
 import { FindAllUser } from '../../../application/find-all';
 import { PrismaClientAdapter } from '../../../../../internal/database/prisma/PrismaClientAdapter';
+import { type FastifyInstanceCustom } from '../../../../../internal/server/fastify';
 
-export default async function UserRoutes(fastify: FastifyInstance): Promise<void> {
+export default async function UserRoutes(fastify: FastifyInstanceCustom): Promise<void> {
   const prismaClientAdapter: PrismaClientAdapter = new PrismaClientAdapter();
   const userMysqlRepository: UserRepository = new UserMysqlRepository(prismaClientAdapter);
   const createUser = new CreateUser(userMysqlRepository);
@@ -28,6 +28,13 @@ export default async function UserRoutes(fastify: FastifyInstance): Promise<void
     findAllUser,
   );
 
-  fastify.get('/', userController.getUsers.bind(userController));
-  fastify.get('/:id', userController.getUserById.bind(userController));
+  fastify.get(
+    '/',
+    {
+      onRequest: [fastify.authenticate],
+    },
+    userController.getUsers.bind(userController),
+  );
+
+  fastify.post('/', userController.addUser.bind(userController));
 }

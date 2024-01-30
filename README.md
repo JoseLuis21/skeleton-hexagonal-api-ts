@@ -10,6 +10,7 @@
 - [![zod](https://img.shields.io/badge/zod-3.22.4-brightgreen.svg)](https://www.npmjs.com/package/zod)
 - [![dotenv](https://img.shields.io/badge/dotenv-16.4.1-brightgreen.svg)](https://www.npmjs.com/package/dotenv)
 - [![env-var](https://img.shields.io/badge/env--var-7.4.1-brightgreen.svg)](https://www.npmjs.com/package/env-var)
+- [![@fastify/jwt](https://img.shields.io/badge/fastify--jwt-8.0.0-brightgreen.svg)](https://www.npmjs.com/package/@fastify/jwt)
 
 ### Development dependencies
 
@@ -138,6 +139,40 @@ For route management we use `Fastify`
 ```
 
 For more information go to the [Documentation](https://fastify.dev/docs/latest/)
+
+## PRIVATE ROUTES
+
+1. Install `fastify-jwt`
+
+```bash
+  npm install @fastify/jwt
+```
+
+2. A file is created to extend the FastifyInstance types which allows adding the plugin to the routes without typing errors
+
+- File in `./src/internal/server/fastify.d.ts`
+
+3. For use add in routes `onRequest: [fastify.authenticate]` for example:
+
+```js
+fastify.get(
+  '/',
+  {
+    onRequest: [fastify.authenticate],
+  },
+  userController.getUsers.bind(userController),
+);
+```
+
+- File of the plugin is `./src/modules/users/infrastructure/http/routes/user.routes.ts`
+
+4. To generate the token, it is done with the `Reply` object with the `jwtSign` method for example:
+
+```js
+const token = await reply.jwtSign({ payload });
+```
+
+For more information go to the [Documentation](https://github.com/fastify/fastify-jwt#readme)
 
 ## VALIDATIONS
 

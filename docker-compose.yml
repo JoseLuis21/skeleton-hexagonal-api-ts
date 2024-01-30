@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   skeleton-hexagonal-api:
     build:
@@ -8,11 +8,18 @@ services:
     container_name: skeleton-hexagonal-api
     restart: always
     ports:
-      - "3081:80"
+      - '3081:80'
     networks:
       - skeleton-hexagonal-network
     environment:
       NODE_ENV: production
+  redis:
+    image: redis
+    container_name: skeleton-hexagonal-redis
+    ports:
+      - '6379:6379'
+    networks:
+      - skeleton-hexagonal-network
 networks:
   skeleton-hexagonal-network:
     driver: bridge
