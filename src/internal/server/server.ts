@@ -3,11 +3,13 @@ import cors from '@fastify/cors';
 
 export class Server {
   private readonly fastify: FastifyInstance;
+  private readonly port: number;
 
-  constructor() {
+  constructor(port: number) {
     this.fastify = Fastify({
       logger: true,
     });
+    this.port = port;
   }
 
   async initialize(): Promise<boolean | Error> {
@@ -16,7 +18,7 @@ export class Server {
     await this.addRoutes();
 
     try {
-      await this.fastify.listen({ port: 8084 });
+      await this.fastify.listen({ port: this.port });
       return true;
     } catch (error) {
       if (error instanceof Error) {

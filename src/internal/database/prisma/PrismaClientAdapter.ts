@@ -1,11 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 import { type TenantConfig } from '../../../modules/shared/domain/tenant-types';
+import { variablesEnvs } from '../../environment/variables';
 
 const dataSources: Record<string, string | null> = {
-  node_1_reader: process.env.MYSL_HOST_READ_1 ?? null,
-  node_1_writter: process.env.MYSL_HOST_WRITE_1 ?? null,
-  node_2_reader: process.env.MYSL_HOST_READ_2 ?? null,
-  node_2_writter: process.env.MYSL_HOST_WRITE_2 ?? null,
+  node_1_reader: variablesEnvs.MYSQL_HOST_READ_1,
+  node_1_writter: variablesEnvs.MYSQL_HOST_WRITE_1,
+  node_2_reader: variablesEnvs.MYSQL_HOST_READ_2,
+  node_2_writter: variablesEnvs.MYSQL_HOST_WRITE_2,
 };
 
 export class PrismaClientAdapter {

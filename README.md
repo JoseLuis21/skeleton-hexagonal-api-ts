@@ -1,6 +1,6 @@
 # SKELETON API TS HEXAGONAL
 
-[![npm version](https://img.shields.io/badge/npm-10.3.0-brightgreen.svg)](https://www.npmjs.com/package/npm)
+[![npm version](https://img.shields.io/badge/npm-10.3.0-orange.svg)](https://www.npmjs.com/package/npm)
 
 ### Dependencies
 
@@ -8,16 +8,18 @@
 - [![@fastify/cors](https://img.shields.io/badge/@fastify/cors-8.5.0-brightgreen.svg)](https://www.npmjs.com/package/@fastify/cors)
 - [![@prisma/client](https://img.shields.io/badge/@prisma/client-5.8.1-brightgreen.svg)](https://www.npmjs.com/package/@prisma/client)
 - [![zod](https://img.shields.io/badge/zod-3.22.4-brightgreen.svg)](https://www.npmjs.com/package/zod)
+- [![dotenv](https://img.shields.io/badge/dotenv-16.4.1-brightgreen.svg)](https://www.npmjs.com/package/dotenv)
+- [![env-var](https://img.shields.io/badge/env--var-7.4.1-brightgreen.svg)](https://www.npmjs.com/package/env-var)
 
 ### Development dependencies
 
-- [![@types/node](https://img.shields.io/badge/@types/node-20.11.5-brightgreen.svg)](https://www.npmjs.com/package/@types/node)
-- [![eslint](https://img.shields.io/badge/eslint-8.56.0-brightgreen.svg)](https://www.npmjs.com/package/eslint)
-- [![prettier](https://img.shields.io/badge/prettier-3.2.4-brightgreen.svg)](https://www.npmjs.com/package/prettier)
-- [![prisma](https://img.shields.io/badge/prisma-5.8.1-brightgreen.svg)](https://www.npmjs.com/package/prisma)
-- [![rimraf](https://img.shields.io/badge/rimraf-5.0.5-brightgreen.svg)](https://www.npmjs.com/package/rimraf)
-- [![ts-node-dev](https://img.shields.io/badge/ts--node--dev-2.0.0-brightgreen.svg)](https://www.npmjs.com/package/ts-node-dev)
-- [![typescript](https://img.shields.io/badge/typescript-5.3.3-brightgreen.svg)](https://www.npmjs.com/package/typescript)
+- [![@types/node](https://img.shields.io/badge/@types/node-20.11.5-blue.svg)](https://www.npmjs.com/package/@types/node)
+- [![eslint](https://img.shields.io/badge/eslint-8.56.0-blue.svg)](https://www.npmjs.com/package/eslint)
+- [![prettier](https://img.shields.io/badge/prettier-3.2.4-blue.svg)](https://www.npmjs.com/package/prettier)
+- [![prisma](https://img.shields.io/badge/prisma-5.8.1-blue.svg)](https://www.npmjs.com/package/prisma)
+- [![rimraf](https://img.shields.io/badge/rimraf-5.0.5-blue.svg)](https://www.npmjs.com/package/rimraf)
+- [![ts-node-dev](https://img.shields.io/badge/ts--node--dev-2.0.0-blue.svg)](https://www.npmjs.com/package/ts-node-dev)
+- [![typescript](https://img.shields.io/badge/typescript-5.3.3-blue.svg)](https://www.npmjs.com/package/typescript)
 
 Init project
 
@@ -201,3 +203,10 @@ Plugins Recommended, read in:
 ```
 
 For more information go to the [Documentation](https://code.visualstudio.com/docs/nodejs/nodejs-debugging)
+
+## ENVIRONMENT VARIABLES
+
+1. Rename the `env.example` to `.env`
+2. configure your variables in `/src/internal/environment/variables.ts`
+
+For more information go to the [Documentation](https://github.com/motdotla/dotenv#readme)
