@@ -5,7 +5,7 @@ import { type UserRepository } from '../domain/user.repository';
 export class UpdateUser {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async execute(tenantConfig: TenantConfig, user: User): Promise<User> {
-    return await this.userRepository.update(tenantConfig, user);
+  async execute(tenantConfig: TenantConfig, user: User, id: number): Promise<User> {
+    return await this.userRepository.update(tenantConfig, user, id);
   }
 }

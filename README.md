@@ -214,7 +214,7 @@ For database management we use `Prisma`
   npx prisma db pull
 ```
 
-4. Generate primas client
+4. Generate primas client (execute every update shema)
 
 ```bash
   npx prisma generate

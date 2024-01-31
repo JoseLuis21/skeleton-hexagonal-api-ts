@@ -36,5 +36,9 @@ export default async function UserRoutes(fastify: FastifyInstanceCustom): Promis
     userController.getUsers.bind(userController),
   );
 
+  fastify.get('/one', userController.getUserById.bind(userController));
+  fastify.get('/email', userController.getUserByEmail.bind(userController));
   fastify.post('/', userController.addUser.bind(userController));
+  fastify.put('/', userController.modifyUser.bind(userController));
+  fastify.delete('/', userController.removeUser.bind(userController));
 }

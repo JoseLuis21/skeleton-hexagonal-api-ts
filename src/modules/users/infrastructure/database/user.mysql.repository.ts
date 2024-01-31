@@ -7,23 +7,79 @@ export class UserMysqlRepository implements UserRepository {
   constructor(private readonly prismaClientAdapter: PrismaClientAdapter) {}
 
   async create(tenantConfig: TenantConfig, user: User): Promise<User> {
-    throw new Error('Method not implemented.');
+    const prismaclient = await this.prismaClientAdapter.createInstance(tenantConfig);
+
+    const newUser = await prismaclient.user.create({ data: user });
+
+    await prismaclient.$disconnect();
+
+    return newUser;
   }
 
-  async update(tenantConfig: TenantConfig, user: User): Promise<User> {
-    throw new Error('Method not implemented.');
+  async update(tenantConfig: TenantConfig, user: User, id: number): Promise<User> {
+    const prismaclient = await this.prismaClientAdapter.createInstance(tenantConfig);
+
+    const newUser = await prismaclient.user.update({
+      where: {
+        id,
+      },
+      data: user,
+    });
+
+    await prismaclient.$disconnect();
+
+    return newUser;
   }
 
-  async delete(tenantConfig: TenantConfig, id: number): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  async delete(tenantConfig: TenantConfig, id: number): Promise<User> {
+    const prismaclient = await this.prismaClientAdapter.createInstance(tenantConfig);
+    const deleteUser = await prismaclient.user.delete({
+      where: {
+        id,
+      },
+    });
+    await prismaclient.$disconnect();
+    return deleteUser;
   }
 
-  async findById(tenantConfig: TenantConfig, id: number): Promise<User> {
-    throw new Error('Method not implemented.');
+  async findById(tenantConfig: TenantConfig, id: number): Promise<User | null> {
+    const prismaclient = await this.prismaClientAdapter.createInstance(tenantConfig);
+
+    const user = await prismaclient.user.findFirst({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: true,
+      },
+      where: {
+        id,
+      },
+    });
+
+    await prismaclient.$disconnect();
+
+    return user;
   }
 
-  async findByEmail(tenantConfig: TenantConfig, email: string): Promise<User> {
-    throw new Error('Method not implemented.');
+  async findByEmail(tenantConfig: TenantConfig, email: string): Promise<User | null> {
+    const prismaclient = await this.prismaClientAdapter.createInstance(tenantConfig);
+
+    const user = await prismaclient.user.findFirst({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: true,
+      },
+      where: {
+        email,
+      },
+    });
+
+    await prismaclient.$disconnect();
+
+    return user;
   }
 
   async findAll(tenantConfig: TenantConfig, cursor: number, pageLimit: number): Promise<User[]> {

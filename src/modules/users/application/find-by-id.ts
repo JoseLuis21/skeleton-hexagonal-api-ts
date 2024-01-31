@@ -5,7 +5,7 @@ import { type UserRepository } from '../domain/user.repository';
 export class FindByIdUser {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async execute(tenantConfig: TenantConfig, id: number): Promise<User> {
+  async execute(tenantConfig: TenantConfig, id: number): Promise<User | null> {
     return await this.userRepository.findById(tenantConfig, id);
   }
 }

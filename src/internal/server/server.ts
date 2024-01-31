@@ -18,7 +18,7 @@ export class Server {
   async initialize(): Promise<boolean | Error> {
     await this.addCors();
     this.addHealthCheck();
-    await this.addPlugins();
+    await this.addPluginJwtAuth();
     await this.addRoutes();
 
     try {
@@ -48,11 +48,11 @@ export class Server {
     await this.fastify.register(cors, {});
   }
 
-  private async addPlugins(): Promise<void> {
+  private async addPluginJwtAuth(): Promise<void> {
     await this.fastify.register(import('@fastify/jwt'), {
       secret: this.secretJwt,
     });
 
-    await this.fastify.register(import('../../../src/modules/shared/infrastructure/http/auth.plugin'), {});
+    await this.fastify.register(import('./auth.plugin'), {});
   }
 }

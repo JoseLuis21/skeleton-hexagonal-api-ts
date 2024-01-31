@@ -8,6 +8,7 @@ import { type FindByEmailUser } from '../../../application/find-by-email';
 import { type FindAllUser } from '../../../application/find-all';
 import { User } from '../../../domain/user.model';
 import { Tenant } from '../../../../shared/domain/tenant.model';
+import { Encryption } from '../../../../../internal/encryption/encryption';
 
 export class UserController {
   constructor(
@@ -26,24 +27,30 @@ export class UserController {
     return await reply.send(users).status(200);
   }
 
-  async addUser(_: FastifyRequest, reply: FastifyReply): Promise<User> {
+  async addUser(_: FastifyRequest, reply: FastifyReply): Promise<User & { token: string }> {
     const tenantConfig = new Tenant('prisma', 1, 'reader');
-    const user = new User('jose', 'jose@jose.cl', '123456');
+
+    const passwordHashed = new Encryption().hash('12345');
+
+    const user = new User('jose', 'jose3@jose.cl', passwordHashed);
 
     const token = await reply.jwtSign({ test: '1' });
 
-    console.log(token);
+    const result = { ...user, token };
 
-    return await this.createUser.execute(tenantConfig.getBaseInfoTentant(), user);
+    await this.createUser.execute(tenantConfig.getBaseInfoTentant(), user);
+
+    return result;
   }
 
   async modifyUser(_: FastifyRequest, reply: FastifyReply): Promise<User> {
     const tenantConfig = new Tenant('prisma', 1, 'reader');
-    const user = new User('jose', 'jose@jose.cl', '123456');
-    return await this.updateUser.execute(tenantConfig.getBaseInfoTentant(), user);
+    const passwordHashed = new Encryption().hash('12345');
+    const user = new User('jose', 'jose@jose.cl', passwordHashed);
+    return await this.updateUser.execute(tenantConfig.getBaseInfoTentant(), user, 1);
   }
 
-  async removeUser(_: FastifyRequest, reply: FastifyReply): Promise<boolean> {
+  async removeUser(_: FastifyRequest, reply: FastifyReply): Promise<User> {
     const tenantConfig = new Tenant('prisma', 1, 'reader');
     return await this.deleteUser.execute(tenantConfig.getBaseInfoTentant(), 1);
   }
@@ -51,7 +58,7 @@ export class UserController {
   async getUserById(_: FastifyRequest, reply: FastifyReply): Promise<User> {
     try {
       const tenantConfig = new Tenant('prisma', 1, 'reader');
-      const user = await this.findByIdUser.execute(tenantConfig.getBaseInfoTentant(), 1);
+      const user = await this.findByIdUser.execute(tenantConfig.getBaseInfoTentant(), 2);
       return await reply.send(user).status(200);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -65,8 +72,8 @@ export class UserController {
     }
   }
 
-  async getUserByEmail(_: FastifyRequest, reply: FastifyReply): Promise<User> {
+  async getUserByEmail(_: FastifyRequest, reply: FastifyReply): Promise<User | null> {
     const tenantConfig = new Tenant('prisma', 1, 'reader');
-    return await this.findByEmailUser.execute(tenantConfig.getBaseInfoTentant(), 'test@test.com');
+    return await this.findByEmailUser.execute(tenantConfig.getBaseInfoTentant(), 'email@email5.cl');
   }
 }
