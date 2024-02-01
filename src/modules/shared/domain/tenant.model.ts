@@ -2,20 +2,20 @@ import { type TenantConfig, type TenantType } from './tenant-types';
 
 export class Tenant {
   constructor(
-    private readonly databaseName: string,
-    private readonly databaseNode: number,
-    private readonly databaseType: TenantType,
+    private readonly tenantName: string,
+    private readonly tenantNode: number,
+    private readonly tenantType: TenantType,
   ) {
-    this.databaseName = databaseName;
-    this.databaseNode = databaseNode;
-    this.databaseType = databaseType;
+    this.tenantName = tenantName;
+    this.tenantNode = tenantNode;
+    this.tenantType = tenantType;
   }
 
   public getBaseInfoTentant(): TenantConfig {
     return {
-      tenantName: this.databaseName,
-      tenantNode: this.databaseNode,
-      tenantType: this.databaseType,
+      tenantName: this.tenantName,
+      tenantNode: this.tenantNode,
+      tenantType: this.tenantType,
     };
   }
 }

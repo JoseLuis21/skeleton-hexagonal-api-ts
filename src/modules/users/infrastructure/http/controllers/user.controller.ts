@@ -21,20 +21,19 @@ export class UserController {
   ) {}
 
   async getUsers(request: FastifyRequest, reply: FastifyReply): Promise<User> {
-    const tenantConfig = new Tenant('prisma', 1, 'reader');
-    console.log(request.user);
+    const tenantConfig = new Tenant(request.user.tenantName, request.user.tenantNode, 'reader');
     const users = await this.findAllUser.execute(tenantConfig.getBaseInfoTentant(), 4, 3);
     return await reply.send(users).status(200);
   }
 
   async addUser(_: FastifyRequest, reply: FastifyReply): Promise<User & { token: string }> {
-    const tenantConfig = new Tenant('prisma', 1, 'reader');
+    const tenantConfig = new Tenant('prisma', 1, 'writter');
 
     const passwordHashed = new Encryption().hash('12345');
 
-    const user = new User('jose', 'jose3@jose.cl', passwordHashed);
+    const user = new User('jose', 'jose8@jose.cl', passwordHashed);
 
-    const token = await reply.jwtSign({ test: '1' });
+    const token = await reply.jwtSign({ tenantName: 'prisma', tenantNode: 1 });
 
     const result = { ...user, token };
 
@@ -43,21 +42,21 @@ export class UserController {
     return result;
   }
 
-  async modifyUser(_: FastifyRequest, reply: FastifyReply): Promise<User> {
-    const tenantConfig = new Tenant('prisma', 1, 'reader');
+  async modifyUser(request: FastifyRequest, reply: FastifyReply): Promise<User> {
+    const tenantConfig = new Tenant(request.user.tenantName, request.user.tenantNode, 'reader');
     const passwordHashed = new Encryption().hash('12345');
     const user = new User('jose', 'jose@jose.cl', passwordHashed);
     return await this.updateUser.execute(tenantConfig.getBaseInfoTentant(), user, 1);
   }
 
-  async removeUser(_: FastifyRequest, reply: FastifyReply): Promise<User> {
-    const tenantConfig = new Tenant('prisma', 1, 'reader');
+  async removeUser(request: FastifyRequest, reply: FastifyReply): Promise<User> {
+    const tenantConfig = new Tenant(request.user.tenantName, request.user.tenantNode, 'reader');
     return await this.deleteUser.execute(tenantConfig.getBaseInfoTentant(), 1);
   }
 
-  async getUserById(_: FastifyRequest, reply: FastifyReply): Promise<User> {
+  async getUserById(request: FastifyRequest, reply: FastifyReply): Promise<User> {
     try {
-      const tenantConfig = new Tenant('prisma', 1, 'reader');
+      const tenantConfig = new Tenant(request.user.tenantName, request.user.tenantNode, 'reader');
       const user = await this.findByIdUser.execute(tenantConfig.getBaseInfoTentant(), 2);
       return await reply.send(user).status(200);
     } catch (error) {
@@ -72,8 +71,8 @@ export class UserController {
     }
   }
 
-  async getUserByEmail(_: FastifyRequest, reply: FastifyReply): Promise<User | null> {
-    const tenantConfig = new Tenant('prisma', 1, 'reader');
+  async getUserByEmail(request: FastifyRequest, reply: FastifyReply): Promise<User | null> {
+    const tenantConfig = new Tenant(request.user.tenantName, request.user.tenantNode, 'reader');
     return await this.findByEmailUser.execute(tenantConfig.getBaseInfoTentant(), 'email@email5.cl');
   }
 }

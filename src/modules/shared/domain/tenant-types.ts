@@ -5,3 +5,8 @@ export interface TenantConfig {
   tenantNode: number;
   tenantType: TenantType;
 }
+
+export interface TenantData {
+  tenantName: string;
+  tenantNode: number;
+}

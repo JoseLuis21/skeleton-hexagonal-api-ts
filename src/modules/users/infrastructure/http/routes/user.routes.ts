@@ -8,9 +8,9 @@ import { FindByIdUser } from '../../../application/find-by-id';
 import { FindByEmailUser } from '../../../application/find-by-email';
 import { FindAllUser } from '../../../application/find-all';
 import { PrismaClientAdapter } from '../../../../../internal/database/prisma/PrismaClientAdapter';
-import { type FastifyInstanceCustom } from '../../../../../internal/server/fastify';
+import { type FastifyInstance } from 'fastify';
 
-export default async function UserRoutes(fastify: FastifyInstanceCustom): Promise<void> {
+export default async function UserRoutes(fastify: FastifyInstance): Promise<void> {
   const prismaClientAdapter: PrismaClientAdapter = new PrismaClientAdapter();
   const userMysqlRepository: UserRepository = new UserMysqlRepository(prismaClientAdapter);
   const createUser = new CreateUser(userMysqlRepository);
@@ -36,9 +36,33 @@ export default async function UserRoutes(fastify: FastifyInstanceCustom): Promis
     userController.getUsers.bind(userController),
   );
 
-  fastify.get('/one', userController.getUserById.bind(userController));
-  fastify.get('/email', userController.getUserByEmail.bind(userController));
+  fastify.get(
+    '/one',
+    {
+      onRequest: [fastify.authenticate],
+    },
+    userController.getUserById.bind(userController),
+  );
+  fastify.get(
+    '/email',
+    {
+      onRequest: [fastify.authenticate],
+    },
+    userController.getUserByEmail.bind(userController),
+  );
   fastify.post('/', userController.addUser.bind(userController));
-  fastify.put('/', userController.modifyUser.bind(userController));
-  fastify.delete('/', userController.removeUser.bind(userController));
+  fastify.put(
+    '/',
+    {
+      onRequest: [fastify.authenticate],
+    },
+    userController.modifyUser.bind(userController),
+  );
+  fastify.delete(
+    '/',
+    {
+      onRequest: [fastify.authenticate],
+    },
+    userController.removeUser.bind(userController),
+  );
 }
