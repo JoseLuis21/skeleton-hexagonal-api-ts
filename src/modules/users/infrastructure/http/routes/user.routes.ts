@@ -40,14 +40,14 @@ export default async function UserRoutes(fastify: FastifyInstance): Promise<void
   );
 
   fastify.get(
-    '/one',
+    '/:id',
     {
       onRequest: [fastify.authenticate],
     },
     userController.getUserById.bind(userController),
   );
   fastify.get(
-    '/email',
+    '/by-email/:email',
     {
       onRequest: [fastify.authenticate],
     },
@@ -55,7 +55,7 @@ export default async function UserRoutes(fastify: FastifyInstance): Promise<void
   );
   fastify.post('/', userController.addUser.bind(userController));
   fastify.put(
-    '/',
+    '/:id',
     {
       onRequest: [fastify.authenticate],
     },
