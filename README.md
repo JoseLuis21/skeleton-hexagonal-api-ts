@@ -270,8 +270,3 @@ For more information go to the [Documentation](https://code.visualstudio.com/doc
 2. configure your variables in `/src/internal/environment/variables.ts`
 
 For more information go to the [Documentation](https://github.com/motdotla/dotenv#readme)
-
-TODO:
-Documentation Swagger: https://github.com/fastify/fastify-swagger
-Documentation Swagger UI: https://github.com/fastify/fastify-swagger-ui
-RabbitMQ: Offical Docs
