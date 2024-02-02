@@ -6,11 +6,14 @@
 
 - [![fastify](https://img.shields.io/badge/fastify-4.25.2-brightgreen.svg)](https://www.npmjs.com/package/fastify)
 - [![@fastify/cors](https://img.shields.io/badge/@fastify/cors-8.5.0-brightgreen.svg)](https://www.npmjs.com/package/@fastify/cors)
+- [![@fastify/jwt](https://img.shields.io/badge/@fastify--jwt-8.0.0-brightgreen.svg)](https://www.npmjs.com/package/@fastify/jwt)
+- [![@fastify/rate-limit](https://img.shields.io/badge/@fastify--rate--limit-9.1.0-brightgreen.svg)](https://www.npmjs.com/package/@fastify/rate-limit)
 - [![@prisma/client](https://img.shields.io/badge/@prisma/client-5.8.1-brightgreen.svg)](https://www.npmjs.com/package/@prisma/client)
 - [![zod](https://img.shields.io/badge/zod-3.22.4-brightgreen.svg)](https://www.npmjs.com/package/zod)
 - [![dotenv](https://img.shields.io/badge/dotenv-16.4.1-brightgreen.svg)](https://www.npmjs.com/package/dotenv)
 - [![env-var](https://img.shields.io/badge/env--var-7.4.1-brightgreen.svg)](https://www.npmjs.com/package/env-var)
-- [![@fastify/jwt](https://img.shields.io/badge/fastify--jwt-8.0.0-brightgreen.svg)](https://www.npmjs.com/package/@fastify/jwt)
+- [![bcryptjs](https://img.shields.io/badge/bcryptjs-2.4.3-brightgreen.svg)](https://www.npmjs.com/package/bcryptjs)
+- [![ioredis](https://img.shields.io/badge/ioredis-5.3.2-brightgreen.svg)](https://www.npmjs.com/package/ioredis)
 
 ### Development dependencies
 
@@ -140,6 +143,28 @@ For route management we use `Fastify`
 
 For more information go to the [Documentation](https://fastify.dev/docs/latest/)
 
+## CACHE REDIS
+
+1. Install redis
+
+```bash
+  npm install ioredis
+```
+
+2. Use `RedisClientAdapter` for cache
+
+For more information go to the [Documentation](https://github.com/redis/ioredis#readme)
+
+## RATE LIMIT
+
+1. Install `@fastify/rate-limit` using cache Redis for multiples server
+
+```bash
+  npm i @fastify/rate-limit
+```
+
+For more information go to the [Documentation](https://github.com/fastify/fastify-rate-limit#readme)
+
 ## PRIVATE ROUTES
 
 1. Install `fastify-jwt`
@@ -221,18 +246,6 @@ For database management we use `Prisma`
 ```
 
 For more information go to the [Documentation](https://www.prisma.io/docs/orm)
-
-## CACHE REDIS
-
-1. Install redis
-
-```bash
-  npm install redis
-```
-
-2. Use `RedisClientAdapter` for cache
-
-For more information go to the [Documentation](https://github.com/redis/node-redis#readme)
 
 ## DEBUG IN VSCODE
 

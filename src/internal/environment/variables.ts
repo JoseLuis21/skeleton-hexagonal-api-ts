@@ -4,7 +4,9 @@ import { get } from 'env-var';
 export const variablesEnvs = {
   PORT: get('PORT').required().asPortNumber(),
   JWT_SECRET: get('JWT_SECRET').required().asString(),
-  URL_REDIS: get('URL_REDIS').required().asString(),
+  HOST_REDIS: get('HOST_REDIS').required().asString(),
+  PORT_REDIS: get('PORT_REDIS').required().asPortNumber(),
+  RATE_LIMIT: get('RATE_LIMIT').required().asInt(),
   MYSQL_HOST_READ_1: get('MYSQL_HOST_READ_1').required().asString(),
   MYSQL_HOST_WRITE_1: get('MYSQL_HOST_WRITE_1').required().asString(),
   MYSQL_HOST_READ_2: get('MYSQL_HOST_READ_2').required().asString(),

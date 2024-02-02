@@ -1,8 +1,10 @@
+import { RedisClientAdapter } from './internal/cache/redis.client.adapter';
 import { variablesEnvs } from './internal/environment/variables';
 import { Server } from './internal/server/server';
 
 (() => {
-  const server = new Server(variablesEnvs.PORT, variablesEnvs.JWT_SECRET);
+  const redisClientAdapter = new RedisClientAdapter();
+  const server = new Server(variablesEnvs.PORT, variablesEnvs.JWT_SECRET, redisClientAdapter);
   server
     .initialize()
     .then(() => {})

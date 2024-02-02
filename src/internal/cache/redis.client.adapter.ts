@@ -1,21 +1,27 @@
-import { createClient } from 'redis';
+import Redis from 'ioredis';
 import { variablesEnvs } from '../environment/variables';
 
 type CacheValue = Record<string, unknown> | number | string | boolean;
 
 export class RedisClientAdapter {
-  private readonly client;
+  public readonly client;
   constructor() {
-    this.client = createClient({
-      url: variablesEnvs.URL_REDIS,
+    this.client = new Redis({
+      connectionName: 'hexagonal-cache',
+      host: variablesEnvs.HOST_REDIS,
+      port: variablesEnvs.PORT_REDIS,
+      connectTimeout: 500,
+      maxRetriesPerRequest: 1,
     });
+
     this.client.on('error', (error) => {
       console.error(`Redis client error`, error);
     });
   }
 
   async connectIfNecessary(): Promise<void> {
-    if (this.client.isReady) {
+    console.log(this.client.status);
+    if (this.client.status === 'ready') {
       return;
     }
 
@@ -32,14 +38,16 @@ export class RedisClientAdapter {
     }
   }
 
-  async set(key: string, value: CacheValue, options: { expirationInMs?: number } = {}): Promise<void> {
+  async set(key: string, value: CacheValue, expirationInS?: number): Promise<void> {
     await this.connectIfNecessary();
 
     const stringifiedValue = typeof value === 'string' ? value : this.stringifyValueForStoring(value);
 
-    await this.client.set(key, stringifiedValue, {
-      PX: options.expirationInMs,
-    });
+    if (expirationInS !== undefined) {
+      await this.client.set(key, stringifiedValue, 'EX', expirationInS);
+      return;
+    }
+    await this.client.set(key, stringifiedValue);
   }
 
   async get(key: string): Promise<CacheValue | null> {

@@ -1,23 +1,28 @@
 import Fastify, { type FastifyInstance, type FastifyReply, type FastifyRequest } from 'fastify';
 import cors from '@fastify/cors';
+import { type RedisClientAdapter } from '../cache/redis.client.adapter';
+import { variablesEnvs } from '../environment/variables';
 
 export class Server {
   private readonly fastify: FastifyInstance;
   private readonly port: number;
   private readonly secretJwt: string;
+  private readonly redisClientAdapter: RedisClientAdapter;
 
-  constructor(port: number, secretJwt: string) {
+  constructor(port: number, secretJwt: string, redisClientAdapter: RedisClientAdapter) {
     this.fastify = Fastify({
       logger: true,
     });
     this.port = port;
     this.secretJwt = secretJwt;
+    this.redisClientAdapter = redisClientAdapter;
   }
 
   async initialize(): Promise<boolean | Error> {
     await this.addCors();
     this.addHealthCheck();
     await this.addPluginJwtAuth();
+    await this.addPluginRateLimit();
     await this.addRoutes();
 
     try {
@@ -67,5 +72,13 @@ export class Server {
     });
 
     await this.fastify.register(import('./auth.plugin'), {});
+  }
+
+  private async addPluginRateLimit(): Promise<void> {
+    await this.fastify.register(import('@fastify/rate-limit'), {
+      max: variablesEnvs.RATE_LIMIT,
+      timeWindow: '1 minute',
+      redis: this.redisClientAdapter.client,
+    });
   }
 }
