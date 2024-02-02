@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { type TenantConfig } from '../../../modules/shared/domain/tenant-types';
+import { type TenantConfig } from '../../../modules/shared/domain/tenant.types';
 import { variablesEnvs } from '../../environment/variables';
 
 const dataSources: Record<string, string | null> = {

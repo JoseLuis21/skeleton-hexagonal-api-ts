@@ -222,6 +222,18 @@ For database management we use `Prisma`
 
 For more information go to the [Documentation](https://www.prisma.io/docs/orm)
 
+## CACHE REDIS
+
+1. Install redis
+
+```bash
+  npm install redis
+```
+
+2. Use `RedisClientAdapter` for cache
+
+For more information go to the [Documentation](https://github.com/redis/node-redis#readme)
+
 ## DEBUG IN VSCODE
 
 Modify the `launch.json` and `task.json` file to your liking to run the vscode debug

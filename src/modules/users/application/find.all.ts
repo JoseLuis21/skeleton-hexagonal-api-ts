@@ -1,4 +1,4 @@
-import { type TenantConfig } from '../../shared/domain/tenant-types';
+import { type TenantConfig } from '../../shared/domain/tenant.types';
 import { type User } from '../domain/user.model';
 import { type UserRepository } from '../domain/user.repository';
 

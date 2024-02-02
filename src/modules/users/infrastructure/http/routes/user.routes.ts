@@ -4,13 +4,15 @@ import { UserMysqlRepository } from '../../database/user.mysql.repository';
 import { CreateUser } from '../../../application/create';
 import { UpdateUser } from '../../../application/update';
 import { DeleteUser } from '../../../application/delete';
-import { FindByIdUser } from '../../../application/find-by-id';
-import { FindByEmailUser } from '../../../application/find-by-email';
-import { FindAllUser } from '../../../application/find-all';
-import { PrismaClientAdapter } from '../../../../../internal/database/prisma/PrismaClientAdapter';
+import { FindByIdUser } from '../../../application/find.by.id';
+import { FindByEmailUser } from '../../../application/find.by.email';
+import { FindAllUser } from '../../../application/find.all';
+import { PrismaClientAdapter } from '../../../../../internal/database/prisma/prisma.client.adapter';
 import { type FastifyInstance } from 'fastify';
+import { RedisClientAdapter } from '../../../../../internal/cache/redis.client.adapter';
 
 export default async function UserRoutes(fastify: FastifyInstance): Promise<void> {
+  const redisClientAdapter = new RedisClientAdapter();
   const prismaClientAdapter: PrismaClientAdapter = new PrismaClientAdapter();
   const userMysqlRepository: UserRepository = new UserMysqlRepository(prismaClientAdapter);
   const createUser = new CreateUser(userMysqlRepository);
@@ -26,6 +28,7 @@ export default async function UserRoutes(fastify: FastifyInstance): Promise<void
     findByIdUser,
     findByEmailUser,
     findAllUser,
+    redisClientAdapter,
   );
 
   fastify.get(

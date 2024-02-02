@@ -3,12 +3,13 @@ import { z } from 'zod';
 import { type CreateUser } from '../../../application/create';
 import { type UpdateUser } from '../../../application/update';
 import { type DeleteUser } from '../../../application/delete';
-import { type FindByIdUser } from '../../../application/find-by-id';
-import { type FindByEmailUser } from '../../../application/find-by-email';
-import { type FindAllUser } from '../../../application/find-all';
+import { type FindByIdUser } from '../../../application/find.by.id';
+import { type FindByEmailUser } from '../../../application/find.by.email';
+import { type FindAllUser } from '../../../application/find.all';
 import { User } from '../../../domain/user.model';
 import { Tenant } from '../../../../shared/domain/tenant.model';
 import { Encryption } from '../../../../../internal/encryption/encryption';
+import { type RedisClientAdapter } from '../../../../../internal/cache/redis.client.adapter';
 
 export class UserController {
   constructor(
@@ -18,9 +19,11 @@ export class UserController {
     private readonly findByIdUser: FindByIdUser,
     private readonly findByEmailUser: FindByEmailUser,
     private readonly findAllUser: FindAllUser,
+    private readonly redisClientAdapter: RedisClientAdapter,
   ) {}
 
   async getUsers(request: FastifyRequest, reply: FastifyReply): Promise<User> {
+    await this.redisClientAdapter.set('test_key', 'test_value');
     const tenantConfig = new Tenant(request.user.tenantName, request.user.tenantNode, 'reader');
     const users = await this.findAllUser.execute(tenantConfig.getBaseInfoTentant(), 4, 3);
     return await reply.send(users).status(200);

@@ -1,4 +1,4 @@
-import { type TenantConfig, type TenantType } from './tenant-types';
+import { type TenantConfig, type TenantType } from './tenant.types';
 
 export class Tenant {
   constructor(

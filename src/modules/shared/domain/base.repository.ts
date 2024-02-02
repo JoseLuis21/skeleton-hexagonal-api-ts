@@ -1,4 +1,4 @@
-import { type TenantConfig } from './tenant-types';
+import { type TenantConfig } from './tenant.types';
 
 export interface Baserepository<T, Q> {
   create: (tenantConfig: TenantConfig, model: T) => Promise<T>;
