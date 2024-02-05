@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { type TenantConfig } from '../../../modules/shared/domain/tenant.types';
-import { variablesEnvs } from '../../environment/variables';
+import { type TenantConfig } from '../../modules/shared/domain/tenant.types';
+import { variablesEnvs } from '../environment/variables';
 
 const dataSources: Record<string, string | null> = {
   node_1_reader: variablesEnvs.MYSQL_HOST_READ_1,

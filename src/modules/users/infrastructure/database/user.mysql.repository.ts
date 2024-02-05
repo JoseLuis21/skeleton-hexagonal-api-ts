@@ -1,6 +1,6 @@
 import { type User } from '../../domain/user.model';
 import { type UserRepository } from '../../domain/user.repository';
-import { type PrismaClientAdapter } from '../../../../internal/database/prisma/prisma.client.adapter';
+import { type PrismaClientAdapter } from '../../../../internal/database/prisma.client.adapter';
 import { type TenantConfig } from '../../../shared/domain/tenant.types';
 
 export class UserMysqlRepository implements UserRepository {

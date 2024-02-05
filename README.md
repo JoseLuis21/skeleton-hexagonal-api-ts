@@ -14,6 +14,8 @@
 - [![env-var](https://img.shields.io/badge/env--var-7.4.1-brightgreen.svg)](https://www.npmjs.com/package/env-var)
 - [![bcryptjs](https://img.shields.io/badge/bcryptjs-2.4.3-brightgreen.svg)](https://www.npmjs.com/package/bcryptjs)
 - [![ioredis](https://img.shields.io/badge/ioredis-5.3.2-brightgreen.svg)](https://www.npmjs.com/package/ioredis)
+- [![@fastify/swagger](https://img.shields.io/badge/@fastify/swagger-8.14.0-brightgreen.svg)](https://www.npmjs.com/package/@fastify/swagger)
+- [![@scalar/fastify-api-reference](https://img.shields.io/badge/@scalar/fastify--api--reference-1.14.8-brightgreen.svg)](https://www.npmjs.com/package/@scalar/fastify-api-reference)
 
 ### Development dependencies
 
@@ -198,6 +200,23 @@ const token = await reply.jwtSign({ payload });
 ```
 
 For more information go to the [Documentation](https://github.com/fastify/fastify-jwt#readme)
+
+## DOCUMENTATION API
+
+For generate doc use `@fastify/swagger` and for UI use `@scalar/fastify-api-reference`
+
+1. Install dependencies
+
+```bash
+  npm install @fastify/swagger @scalar/fastify-api-reference
+```
+
+2. Configure Plugin in `server.ts`
+
+3. Example Schemas in module `User`
+
+For more information go to the [Documentation @fastify/swagger](https://github.com/fastify/fastify-swagger)
+For more information go to the [Documentation @scalar/fastify-api-reference](https://github.com/scalar/scalar)
 
 ## VALIDATIONS
 

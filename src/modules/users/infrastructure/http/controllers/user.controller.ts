@@ -27,7 +27,7 @@ export class UserController {
     await this.redisClientAdapter.set('test_key', 'test_value');
     const tenantConfig = new Tenant(request.user.tenantName, request.user.tenantNode, 'reader');
     const users = await this.findAllUser.execute(tenantConfig.getBaseInfoTentant(), 4, 3);
-    return await reply.send(users).status(200);
+    return await reply.status(200).send(users);
   }
 
   async addUser(request: FastifyRequest, reply: FastifyReply): Promise<User & { token: string }> {
@@ -38,7 +38,7 @@ export class UserController {
     const token = await reply.jwtSign({ tenantName, tenantNode });
     const result = { ...user, token };
     await this.createUser.execute(tenantConfig.getBaseInfoTentant(), user);
-    return result;
+    return await reply.status(201).send(result);
   }
 
   async modifyUser(request: FastifyRequest, reply: FastifyReply): Promise<User> {
@@ -48,7 +48,8 @@ export class UserController {
       const tenantConfig = new Tenant(tenantName, tenantNode, 'writter');
       const passwordHashed = new Encryption().hash(password);
       const user = new User(name, email, passwordHashed);
-      return await this.updateUser.execute(tenantConfig.getBaseInfoTentant(), user, Number(id));
+      const result = await this.updateUser.execute(tenantConfig.getBaseInfoTentant(), user, Number(id));
+      return await reply.status(200).send(result);
     } catch (error) {
       if (error instanceof z.ZodError) {
         const validationErrors = error.errors.map((err) => ({
@@ -65,7 +66,8 @@ export class UserController {
     try {
       const { id } = shemaUserById.parse(request.params);
       const tenantConfig = new Tenant(request.user.tenantName, request.user.tenantNode, 'writter');
-      return await this.deleteUser.execute(tenantConfig.getBaseInfoTentant(), Number(id));
+      const result = await this.deleteUser.execute(tenantConfig.getBaseInfoTentant(), Number(id));
+      return await reply.status(200).send(result);
     } catch (error) {
       if (error instanceof z.ZodError) {
         const validationErrors = error.errors.map((err) => ({
@@ -83,7 +85,7 @@ export class UserController {
       const { id } = shemaUserById.parse(request.params);
       const tenantConfig = new Tenant(request.user.tenantName, request.user.tenantNode, 'reader');
       const user = await this.findByIdUser.execute(tenantConfig.getBaseInfoTentant(), Number(id));
-      return await reply.send(user).status(200);
+      return await reply.status(200).send(user);
     } catch (error) {
       if (error instanceof z.ZodError) {
         const validationErrors = error.errors.map((err) => ({
@@ -100,7 +102,8 @@ export class UserController {
     try {
       const { email } = shemaGetUserByEmail.parse(request.params);
       const tenantConfig = new Tenant(request.user.tenantName, request.user.tenantNode, 'reader');
-      return await this.findByEmailUser.execute(tenantConfig.getBaseInfoTentant(), email);
+      const result = await this.findByEmailUser.execute(tenantConfig.getBaseInfoTentant(), email);
+      return await reply.status(200).send(result);
     } catch (error) {
       console.log(error);
       if (error instanceof z.ZodError) {

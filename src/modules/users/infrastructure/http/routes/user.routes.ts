@@ -7,9 +7,17 @@ import { DeleteUser } from '../../../application/delete';
 import { FindByIdUser } from '../../../application/find.by.id';
 import { FindByEmailUser } from '../../../application/find.by.email';
 import { FindAllUser } from '../../../application/find.all';
-import { PrismaClientAdapter } from '../../../../../internal/database/prisma/prisma.client.adapter';
+import { PrismaClientAdapter } from '../../../../../internal/database/prisma.client.adapter';
 import { type FastifyInstance } from 'fastify';
 import { RedisClientAdapter } from '../../../../../internal/cache/redis.client.adapter';
+import {
+  createUserSchema,
+  deleteUserSchema,
+  getUserByEmailSchema,
+  getUserSchema,
+  getUsersSchema,
+  modifyUserSchema,
+} from './user.schema';
 
 export default async function UserRoutes(fastify: FastifyInstance): Promise<void> {
   const redisClientAdapter = new RedisClientAdapter();
@@ -34,6 +42,7 @@ export default async function UserRoutes(fastify: FastifyInstance): Promise<void
   fastify.get(
     '/',
     {
+      schema: getUsersSchema,
       onRequest: [fastify.authenticate],
     },
     userController.getUsers.bind(userController),
@@ -42,6 +51,7 @@ export default async function UserRoutes(fastify: FastifyInstance): Promise<void
   fastify.get(
     '/:id',
     {
+      schema: getUserSchema,
       onRequest: [fastify.authenticate],
     },
     userController.getUserById.bind(userController),
@@ -49,21 +59,30 @@ export default async function UserRoutes(fastify: FastifyInstance): Promise<void
   fastify.get(
     '/by-email/:email',
     {
+      schema: getUserByEmailSchema,
       onRequest: [fastify.authenticate],
     },
     userController.getUserByEmail.bind(userController),
   );
-  fastify.post('/', userController.addUser.bind(userController));
+  fastify.post(
+    '/',
+    {
+      schema: createUserSchema,
+    },
+    userController.addUser.bind(userController),
+  );
   fastify.put(
     '/:id',
     {
+      schema: modifyUserSchema,
       onRequest: [fastify.authenticate],
     },
     userController.modifyUser.bind(userController),
   );
   fastify.delete(
-    '/',
+    '/:id',
     {
+      schema: deleteUserSchema,
       onRequest: [fastify.authenticate],
     },
     userController.removeUser.bind(userController),

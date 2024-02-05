@@ -23,6 +23,8 @@ export class Server {
     this.addHealthCheck();
     await this.addPluginJwtAuth();
     await this.addPluginRateLimit();
+    await this.addPluginSwagger();
+    await this.addPluginUIDoc();
     await this.addRoutes();
 
     try {
@@ -79,6 +81,39 @@ export class Server {
       max: variablesEnvs.RATE_LIMIT,
       timeWindow: '1 minute',
       redis: this.redisClientAdapter.client,
+    });
+  }
+
+  private async addPluginSwagger(): Promise<void> {
+    await this.fastify.register(import('@fastify/swagger'), {
+      swagger: {
+        info: {
+          title: 'Api Hexagonal - Skeleton',
+          description: 'Api Hexagonal - Skeleton Fastify',
+          version: '0.1.0',
+        },
+        host: 'localhost:' + variablesEnvs.PORT,
+        schemes: ['http'],
+        consumes: ['application/json'],
+        produces: ['application/json'],
+        tags: [
+          { name: 'Users', description: 'User related end-points' },
+          { name: 'code', description: 'Code related end-points' },
+        ],
+        securityDefinitions: {
+          apiKey: {
+            type: 'apiKey',
+            name: 'Bearer',
+            in: 'header',
+          },
+        },
+      },
+    });
+  }
+
+  private async addPluginUIDoc(): Promise<void> {
+    await this.fastify.register(import('@scalar/fastify-api-reference'), {
+      routePrefix: '/reference',
     });
   }
 }
