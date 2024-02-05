@@ -216,6 +216,7 @@ For generate doc use `@fastify/swagger` and for UI use `@scalar/fastify-api-refe
 3. Example Schemas in module `User`
 
 For more information go to the [Documentation @fastify/swagger](https://github.com/fastify/fastify-swagger)
+
 For more information go to the [Documentation @scalar/fastify-api-reference](https://github.com/scalar/scalar)
 
 ## VALIDATIONS
