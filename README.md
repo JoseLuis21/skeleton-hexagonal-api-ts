@@ -130,6 +130,7 @@ For more information go to the [Documentation](https://docs.npmjs.com/cli/v10/co
 ```
 
 For more information go to the [Documentation tsc-alias](https://www.npmjs.com/package/tsc-alias)
+
 For more information go to the [Documentation tsconfig-paths](https://www.npmjs.com/package/tsconfig-paths)
 
 ## DOCKER
