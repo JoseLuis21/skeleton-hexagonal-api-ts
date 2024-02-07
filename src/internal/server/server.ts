@@ -1,7 +1,7 @@
 import Fastify, { type FastifyInstance, type FastifyReply, type FastifyRequest } from 'fastify';
 import cors from '@fastify/cors';
-import { type RedisClientAdapter } from '../cache/redis.client.adapter';
-import { variablesEnvs } from '../environment/variables';
+import { type RedisClientAdapter } from '@internal/cache/redis.client.adapter';
+import { variablesEnvs } from '@internal/environment/variables';
 
 export class Server {
   private readonly fastify: FastifyInstance;

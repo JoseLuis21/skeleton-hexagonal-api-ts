@@ -1,16 +1,20 @@
 import { type FastifyReply, type FastifyRequest } from 'fastify';
 import { z } from 'zod';
-import { type CreateUser } from '../../../application/create';
-import { type UpdateUser } from '../../../application/update';
-import { type DeleteUser } from '../../../application/delete';
-import { type FindByIdUser } from '../../../application/find.by.id';
-import { type FindByEmailUser } from '../../../application/find.by.email';
-import { type FindAllUser } from '../../../application/find.all';
-import { User } from '../../../domain/user.model';
-import { Tenant } from '../../../../shared/domain/tenant.model';
-import { Encryption } from '../../../../../internal/encryption/encryption';
-import { type RedisClientAdapter } from '../../../../../internal/cache/redis.client.adapter';
-import { schemaUser, shemaGetUserByEmail, shemaUserById } from '../validations/user.zod';
+import { type CreateUser } from '@modules/users/application/create';
+import { type UpdateUser } from '@modules/users/application/update';
+import { type DeleteUser } from '@modules/users/application/delete';
+import { type FindByIdUser } from '@modules/users/application/find.by.id';
+import { type FindByEmailUser } from '@modules/users/application/find.by.email';
+import { type FindAllUser } from '@modules/users/application/find.all';
+import { User } from '@modules/users/domain/user.model';
+import { Tenant } from '@modules/shared/domain/tenant.model';
+import { Encryption } from '@internal/encryption/encryption';
+import { type RedisClientAdapter } from '@internal/cache/redis.client.adapter';
+import {
+  schemaUser,
+  shemaGetUserByEmail,
+  shemaUserById,
+} from '@modules/users/infrastructure/http/validations/user.zod';
 
 export class UserController {
   constructor(
@@ -26,7 +30,7 @@ export class UserController {
   async getUsers(request: FastifyRequest, reply: FastifyReply): Promise<User> {
     await this.redisClientAdapter.set('test_key', 'test_value');
     const tenantConfig = new Tenant(request.user.tenantName, request.user.tenantNode, 'reader');
-    const users = await this.findAllUser.execute(tenantConfig.getBaseInfoTentant(), 4, 3);
+    const users = await this.findAllUser.execute(tenantConfig.getBaseInfoTentant(), 5, 3);
     return await reply.status(200).send(users);
   }
 

@@ -1,15 +1,16 @@
-import { UserController } from '../controllers/user.controller';
-import { type UserRepository } from '../../../domain/user.repository';
-import { UserMysqlRepository } from '../../database/user.mysql.repository';
-import { CreateUser } from '../../../application/create';
-import { UpdateUser } from '../../../application/update';
-import { DeleteUser } from '../../../application/delete';
-import { FindByIdUser } from '../../../application/find.by.id';
-import { FindByEmailUser } from '../../../application/find.by.email';
-import { FindAllUser } from '../../../application/find.all';
-import { PrismaClientAdapter } from '../../../../../internal/database/prisma.client.adapter';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { UserController } from '@modules/users/infrastructure/http/controllers/user.controller';
+import { type UserRepository } from '@modules/users/domain/user.repository';
+import { UserMysqlRepository } from '@modules/users/infrastructure/database/user.mysql.repository';
+import { CreateUser } from '@modules/users/application/create';
+import { UpdateUser } from '@modules/users/application/update';
+import { DeleteUser } from '@modules/users/application/delete';
+import { FindByIdUser } from '@modules/users/application/find.by.id';
+import { FindByEmailUser } from '@modules/users/application/find.by.email';
+import { FindAllUser } from '@modules/users/application/find.all';
+import { PrismaClientAdapter } from '@internal/database/prisma.client.adapter';
 import { type FastifyInstance } from 'fastify';
-import { RedisClientAdapter } from '../../../../../internal/cache/redis.client.adapter';
+import { RedisClientAdapter } from '@internal/cache/redis.client.adapter';
 import {
   createUserSchema,
   deleteUserSchema,

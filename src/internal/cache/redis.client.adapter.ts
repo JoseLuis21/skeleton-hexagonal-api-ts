@@ -1,5 +1,5 @@
 import Redis from 'ioredis';
-import { variablesEnvs } from '../environment/variables';
+import { variablesEnvs } from '@internal/environment/variables';
 
 type CacheValue = Record<string, unknown> | number | string | boolean;
 
@@ -20,7 +20,6 @@ export class RedisClientAdapter {
   }
 
   async connectIfNecessary(): Promise<void> {
-    console.log(this.client.status);
     if (this.client.status === 'ready') {
       return;
     }

@@ -26,8 +26,10 @@
 - [![rimraf](https://img.shields.io/badge/rimraf-5.0.5-blue.svg)](https://www.npmjs.com/package/rimraf)
 - [![ts-node-dev](https://img.shields.io/badge/ts--node--dev-2.0.0-blue.svg)](https://www.npmjs.com/package/ts-node-dev)
 - [![typescript](https://img.shields.io/badge/typescript-5.3.3-blue.svg)](https://www.npmjs.com/package/typescript)
+- [![tsc-alias](https://img.shields.io/badge/tsc--alias-1.8.8-blue.svg)](https://www.npmjs.com/package/tsc-alias)
+- [![tsconfig-paths](https://img.shields.io/badge/tsconfig--paths-4.2.0-blue.svg)](https://www.npmjs.com/package/tsconfig-paths)
 
-Init project
+## Init project
 
 ```bash
   npm init -y
@@ -108,6 +110,27 @@ Add command to `package.json` in section scripts
 ```
 
 For more information go to the [Documentation](https://docs.npmjs.com/cli/v10/configuring-npm/package-json)
+
+## PATH ALIAS
+
+1. We use Path Alias:
+
+```bash
+  npm install -D tsconfig-paths tsc-alias
+```
+
+2. Configure Paths in `tsconfig.json`
+
+```json
+  "baseUrl": "./src",
+  "paths": {
+    "@internal/*": ["internal/*"],
+    "@modules/*": ["modules/*"],
+  },
+```
+
+For more information go to the [Documentation tsc-alias](https://www.npmjs.com/package/tsc-alias)
+For more information go to the [Documentation tsconfig-paths](https://www.npmjs.com/package/tsconfig-paths)
 
 ## DOCKER
 

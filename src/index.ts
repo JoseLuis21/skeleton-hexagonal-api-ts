@@ -1,6 +1,6 @@
-import { RedisClientAdapter } from './internal/cache/redis.client.adapter';
-import { variablesEnvs } from './internal/environment/variables';
-import { Server } from './internal/server/server';
+import { RedisClientAdapter } from '@internal/cache/redis.client.adapter';
+import { variablesEnvs } from '@internal/environment/variables';
+import { Server } from '@internal/server/server';
 
 (() => {
   const redisClientAdapter = new RedisClientAdapter();
