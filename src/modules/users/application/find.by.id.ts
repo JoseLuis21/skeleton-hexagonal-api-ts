@@ -6,6 +6,6 @@ export class FindByIdUser {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(tenantConfig: TenantConfig, id: number): Promise<User | null> {
-    return this.userRepository.findById(tenantConfig, id);
+    return await this.userRepository.findById(tenantConfig, id);
   }
 }

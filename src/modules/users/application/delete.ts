@@ -6,6 +6,6 @@ export class DeleteUser {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(tenantConfig: TenantConfig, id: number): Promise<User> {
-    return this.userRepository.delete(tenantConfig, id);
+    return await this.userRepository.delete(tenantConfig, id);
   }
 }

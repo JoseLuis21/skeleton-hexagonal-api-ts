@@ -6,6 +6,6 @@ export class FindAllUser {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(tenantConfig: TenantConfig, cursor: number, pageLimit: number): Promise<User[]> {
-    return this.userRepository.findAll(tenantConfig, cursor, pageLimit);
+    return await this.userRepository.findAll(tenantConfig, cursor, pageLimit);
   }
 }

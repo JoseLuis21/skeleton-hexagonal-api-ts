@@ -6,6 +6,6 @@ export class CreateUser {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(tenantConfig: TenantConfig, user: User): Promise<User> {
-    return this.userRepository.create(tenantConfig, user);
+    return await this.userRepository.create(tenantConfig, user);
   }
 }

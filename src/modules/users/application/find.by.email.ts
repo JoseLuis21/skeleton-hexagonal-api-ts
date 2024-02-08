@@ -6,6 +6,6 @@ export class FindByEmailUser {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(tenantConfig: TenantConfig, email: string): Promise<User | null> {
-    return this.userRepository.findByEmail(tenantConfig, email);
+    return await this.userRepository.findByEmail(tenantConfig, email);
   }
 }
