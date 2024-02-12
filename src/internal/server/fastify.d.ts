@@ -2,6 +2,10 @@ export declare module 'fastify' {
   interface FastifyInstance {
     authenticate?: any;
   }
+
+  export interface FastifyRequest {
+    demo_string?: string;
+  }
 }
 
 interface UserPayload {

@@ -2,6 +2,7 @@ import Fastify, { type FastifyInstance, type FastifyReply, type FastifyRequest }
 import cors from '@fastify/cors';
 import { type RedisClientAdapter } from '@internal/cache/redis.client.adapter';
 import { variablesEnvs } from '@internal/environment/variables';
+import { UuidAdapter } from '@internal/uuid/uuid.adapter';
 
 export class Server {
   private readonly fastify: FastifyInstance;
@@ -20,6 +21,7 @@ export class Server {
 
   async initialize(): Promise<boolean | Error> {
     await this.addCors();
+    this.addHookWithUUID();
     this.addHealthCheck();
     await this.addPluginJwtAuth();
     await this.addPluginRateLimit();
@@ -41,7 +43,7 @@ export class Server {
   }
 
   private addHealthCheck(): void {
-    this.fastify.get('/healthcheck', (_: FastifyRequest, reply: FastifyReply) => reply.send('ok').status(200));
+    this.fastify.get('/healthcheck', (request: FastifyRequest, reply: FastifyReply) => reply.send('ok').status(200));
   }
 
   private async addRoutes(): Promise<void> {
@@ -114,6 +116,13 @@ export class Server {
   private async addPluginUIDoc(): Promise<void> {
     await this.fastify.register(import('@scalar/fastify-api-reference'), {
       routePrefix: '/reference',
+    });
+  }
+
+  private addHookWithUUID(): void {
+    this.fastify.addHook('onRequest', (request, _, done) => {
+      request.demo_string = UuidAdapter.getId();
+      done();
     });
   }
 }

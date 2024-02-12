@@ -1,5 +1,21 @@
 import { type FastifySchema } from 'fastify';
 
+const schemaRequestUser = {
+  trace_id: { type: 'string' },
+  payload: {
+    data: {
+      type: 'object',
+      properties: {
+        name: { type: 'string', description: 'Name user' },
+        email: { type: 'string', description: 'Email user' },
+        password: { type: 'string', description: 'Password user' },
+        tenantName: { type: 'string', description: 'Database Name' },
+        tenantNode: { type: 'number', description: 'Host Number' },
+      },
+    },
+  },
+};
+
 export const getUsersSchema: FastifySchema = {
   description: 'Get all users',
   tags: ['Users'],
@@ -10,14 +26,9 @@ export const getUsersSchema: FastifySchema = {
   response: {
     200: {
       description: 'Successful response',
-      type: 'array',
-      properties: {
-        name: { type: 'string', description: 'Name user' },
-        email: { type: 'string', description: 'Email user' },
-        password: { type: 'string', description: 'Password user' },
-        tenantName: { type: 'string', description: 'Database Name' },
-        tenantNode: { type: 'number', description: 'Host Number' },
-      },
+      type: 'object',
+      properties: schemaRequestUser,
+      total: { type: 'number' },
     },
   },
   security: [
@@ -43,17 +54,12 @@ export const getUserSchema: FastifySchema = {
       },
     },
   },
+
   response: {
     200: {
       description: 'Successful response',
       type: 'object',
-      properties: {
-        name: { type: 'string', description: 'Name user' },
-        email: { type: 'string', description: 'Email user' },
-        password: { type: 'string', description: 'Password user' },
-        tenantName: { type: 'string', description: 'Database Name' },
-        tenantNode: { type: 'number', description: 'Host Number' },
-      },
+      properties: schemaRequestUser,
     },
   },
   security: [
@@ -83,13 +89,7 @@ export const getUserByEmailSchema: FastifySchema = {
     200: {
       description: 'Successful response',
       type: 'object',
-      properties: {
-        name: { type: 'string', description: 'Name user' },
-        email: { type: 'string', description: 'Email user' },
-        password: { type: 'string', description: 'Password user' },
-        tenantName: { type: 'string', description: 'Database Name' },
-        tenantNode: { type: 'number', description: 'Host Number' },
-      },
+      properties: schemaRequestUser,
     },
   },
   security: [
@@ -115,16 +115,10 @@ export const createUserSchema: FastifySchema = {
     },
   },
   response: {
-    201: {
+    200: {
       description: 'Successful response',
       type: 'object',
-      properties: {
-        name: { type: 'string', description: 'Name user' },
-        email: { type: 'string', description: 'Email user' },
-        password: { type: 'string', description: 'Password user' },
-        tenantName: { type: 'string', description: 'Database Name' },
-        tenantNode: { type: 'number', description: 'Host Number' },
-      },
+      properties: schemaRequestUser,
     },
   },
   security: [
@@ -163,14 +157,7 @@ export const modifyUserSchema: FastifySchema = {
     200: {
       description: 'Successful response',
       type: 'object',
-      properties: {
-        id: { type: 'string', description: 'Id user' },
-        name: { type: 'string', description: 'Name user' },
-        email: { type: 'string', description: 'Email user' },
-        password: { type: 'string', description: 'Password user' },
-        tenantName: { type: 'string', description: 'Database Name' },
-        tenantNode: { type: 'number', description: 'Host Number' },
-      },
+      properties: schemaRequestUser,
     },
   },
   security: [
@@ -200,13 +187,7 @@ export const deleteUserSchema: FastifySchema = {
     200: {
       description: 'Successful response',
       type: 'object',
-      properties: {
-        name: { type: 'string', description: 'Name user' },
-        email: { type: 'string', description: 'Email user' },
-        password: { type: 'string', description: 'Password user' },
-        tenantName: { type: 'string', description: 'Database Name' },
-        tenantNode: { type: 'number', description: 'Host Number' },
-      },
+      properties: schemaRequestUser,
     },
   },
   security: [
