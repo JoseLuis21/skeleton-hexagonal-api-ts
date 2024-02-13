@@ -4,7 +4,7 @@ import { Server } from '@internal/server/server';
 
 (() => {
   const redisClientAdapter = new RedisClientAdapter();
-  const server = new Server(variablesEnvs.PORT, variablesEnvs.JWT_SECRET, redisClientAdapter);
+  const server = new Server(variablesEnvs.PORT, variablesEnvs.HOST, variablesEnvs.JWT_SECRET, redisClientAdapter);
   server
     .initialize()
     .then(() => {})

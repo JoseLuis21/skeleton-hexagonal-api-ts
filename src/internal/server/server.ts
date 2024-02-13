@@ -6,16 +6,18 @@ import { UuidAdapter } from '@internal/uuid/uuid.adapter';
 
 export class Server {
   private readonly fastify: FastifyInstance;
+  private readonly host: string;
   private readonly port: number;
   private readonly secretJwt: string;
   private readonly redisClientAdapter: RedisClientAdapter;
 
-  constructor(port: number, secretJwt: string, redisClientAdapter: RedisClientAdapter) {
+  constructor(port: number, host: string, secretJwt: string, redisClientAdapter: RedisClientAdapter) {
     this.fastify = Fastify({
       logger: true,
     });
     this.port = port;
     this.secretJwt = secretJwt;
+    this.host = host;
     this.redisClientAdapter = redisClientAdapter;
   }
 
@@ -30,7 +32,7 @@ export class Server {
     await this.addRoutes();
 
     try {
-      await this.fastify.listen({ port: this.port });
+      await this.fastify.listen({ port: this.port, host: this.host });
       return true;
     } catch (error) {
       if (error instanceof Error) {

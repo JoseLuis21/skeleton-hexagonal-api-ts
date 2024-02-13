@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { get } from 'env-var';
 
 export const variablesEnvs = {
+  HOST: get('HOST').required().asString(),
   PORT: get('PORT').required().asPortNumber(),
   JWT_SECRET: get('JWT_SECRET').required().asString(),
   HOST_REDIS: get('HOST_REDIS').required().asString(),

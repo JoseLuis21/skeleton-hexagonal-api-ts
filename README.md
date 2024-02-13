@@ -312,7 +312,13 @@ For more information go to the [Documentation](https://code.visualstudio.com/doc
 
 ## ENVIRONMENT VARIABLES
 
-1. Rename the `env.example` to `.env`
-2. configure your variables in `/src/internal/environment/variables.ts`
+1. Install packages
+
+```sh
+  npm install dotenv env-var
+```
+
+2. Rename the `env.example` to `.env`
+3. configure your variables in `/src/internal/environment/variables.ts`
 
 For more information go to the [Documentation](https://github.com/motdotla/dotenv#readme)
