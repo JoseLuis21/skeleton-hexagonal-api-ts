@@ -98,19 +98,6 @@ Add in VSCODE `settings.json` and install prettier and eslint plugins in to edit
 
 For more information go to the [Documentation](https://code.visualstudio.com/docs/getstarted/settings)
 
-Add command to `package.json` in section scripts
-
-```json
-{
-  "lint": "eslint --fix ./src/*",
-  "dev": "npx ts-node-dev --respawn --transpile-only --debug ./src/app.ts",
-  "start": "npm run build && node dist/app.js",
-  "build": "rimraf ./dist && tsc"
-}
-```
-
-For more information go to the [Documentation](https://docs.npmjs.com/cli/v10/configuring-npm/package-json)
-
 ## PATH ALIAS
 
 1. We use Path Alias:
@@ -132,6 +119,21 @@ For more information go to the [Documentation](https://docs.npmjs.com/cli/v10/co
 For more information go to the [Documentation tsc-alias](https://www.npmjs.com/package/tsc-alias)
 
 For more information go to the [Documentation tsconfig-paths](https://www.npmjs.com/package/tsconfig-paths)
+
+## SCRIPTS FOR USE
+
+Add command to `package.json` in section scripts
+
+```json
+{
+  "lint": "eslint --fix ./src/*",
+  "dev": "npx ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --debug ./src/index.ts",
+  "start": "npm run build && node dist/index.js",
+  "build": "rimraf ./dist && tsc && tsc-alias -p tsconfig.json"
+}
+```
+
+For more information go to the [Documentation](https://docs.npmjs.com/cli/v10/configuring-npm/package-json)
 
 ## DOCKER
 
